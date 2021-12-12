@@ -42,7 +42,7 @@ https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-g
 ```
 The name of the file will be used as the name of the module and the only content inside of the file should be the corresponding source URL for the hosts file. To enable a module, hard link it (do not use ln -s) to /modules/web/enable and, to disable it, simply unlink it.
 
-**Note:** Steven Black's hosts is enabled by default. To deactivate it, simply move it to modules/web/available. For more info, visit the Steven Black's [official repo](https://github.com/StevenBlack/hosts/).
+**Note:** Steven Black's hosts is enabled by default. To deactivate it, simply unlink it from modules/web/enabled. For more info, visit the Steven Black's [official repo](https://github.com/StevenBlack/hosts/).
 
 # Additional Help
 
