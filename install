@@ -37,18 +37,21 @@ finish_program()
 # Main functions
 normal_installation()
 {
-	# Create remaining directories
-	mkdir backup modules/web/available modules/custom/enabled
-	# Grant permissions
-	grant_permissions
 	# Move executable to $EXEC_DIR
-	mv bin/update-hosts-file $EXEC_DIR/update-hosts-file
+	cp bin/update-hosts-file $EXEC_DIR/update-hosts-file
 	# Create program directory at $PROGRAM_DIR
 	mkdir $PROGRAM_DIR
-	# Remove this file
-	rm ./install
 	# Move all files and directories remaining to $PROGRAM_DIR
-	mv * $PROGRAM_DIR
+	cp -R * $PROGRAM_DIR
+	# Create remaining directories
+	mkdir $PROGRAM_DIR/backup $PROGRAM_DIR/modules/web/enabled $PROGRAM_DIR/modules/custom/enabled
+	# Enable default modules using hard links (available => enabled)
+	show_info "Enabling Steven Black's hosts file web module"
+	ln $PROGRAM_DIR/modules/web/available/stevenblack-fakenews-gambling-porn $PROGRAM_DIR/modules/web/enabled
+	# Remove installation script
+	rm $PROGRAM_DIR/install
+	# Grant permissions
+	grant_permissions
 }
 
 remove_old_program()
@@ -67,40 +70,49 @@ keep_modules_installation()
 	if [ -d $MODULES_DIR ]
 	then
 		show_attention "Modules directory found in $MODULES_DIR. Backing it up..."
+		# Create a temporary directory
+		TMP_DIR=/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+		mkdir $TMP_DIR
 		# Remove modules directory downloaded
-		rm -rf modules
+		#rm -rf modules
+		# Backup current modules directory
+		mv $MODULES_DIR $TMP_DIR/modules
 		# And replace it with the current one
-		mv $MODULES_DIR .
+		#mv $MODULES_DIR .
 	else
 		show_attention "Modules directory not found in $MODULES_DIR."
 		show_attention "A new directory will be installed instead."
 	fi
-
+	# Remove old program
 	remove_old_program
-
-	# Grant permissions
-	grant_permissions
 	# Move executable to $EXEC_DIR
-	mv bin/update-hosts-file $EXEC_DIR/update-hosts-file
+	cp bin/update-hosts-file $EXEC_DIR/update-hosts-file
 	# Create program directory at $PROGRAM_DIR
 	mkdir $PROGRAM_DIR
-	# Remove this file
-	rm ./install
 	# Move all files and directories remaining to $PROGRAM_DIR
-	mv * $PROGRAM_DIR
+	cp -R * $PROGRAM_DIR
+	# Substitute downloaded modules directory with the backed up one
+	rm -rf $PROGRAM_DIR/modules
+	cp -R $TMP_DIR/modules $PROGRAM_DIR/modules
+	# Create remaining directories
+	mkdir $PROGRAM_DIR/backup
+	# Remove installation script
+	rm $PROGRAM_DIR/install
+	# Grant permissions
+	grant_permissions
 }
 
 grant_permissions()
 {
 	# Change owner to root
-	chown -R root:root *
+	chown -R root:root $PROGRAM_DIR $EXEC_DIR/update-hosts-file
 	# Change permissions bits for executables
-	chmod -R 755 bin install 2> /dev/null
+	chmod -R 755 $EXEC_DIR/update-hosts-file $PROGRAM_DIR/bin $PROGRAM_DIR/install 2> /dev/null
 	# Change permissions for directories
-	chmod 755 backup config modules modules/custom modules/custom/available modules/custom/enabled modules/web modules/web/available modules/web/enabled 2> /dev/null
+	chmod 755 $PROGRAM_DIR/backup $PROGRAM_DIR/config $PROGRAM_DIR/modules $PROGRAM_DIR/modules/custom $PROGRAM_DIR/modules/custom/available $PROGRAM_DIR/modules/custom/enabled $PROGRAM_DIR/modules/web $PROGRAM_DIR/modules/web/available $PROGRAM_DIR/modules/web/enabled 2> /dev/null
 	# Change permissions bits for files inside directories (backup, config, custom)
 	# and other files (LICENSE and README.md)
-	chmod 644 backup/* config/* modules/custom/available/* modules/custom/enabled/* modules/web/available/* modules/web/enabled/* LICENSE README.md 2> /dev/null
+	chmod 644 $PROGRAM_DIR/backup/* $PROGRAM_DIR/config/* $PROGRAM_DIR/modules/custom/available/* $PROGRAM_DIR/modules/custom/enabled/* $PROGRAM_DIR/modules/web/available/* $PROGRAM_DIR/modules/web/enabled/* $PROGRAM_DIR/LICENSE $PROGRAM_DIR/README.md 2> /dev/null
 }
 
 #
@@ -139,6 +151,8 @@ else
 	normal_installation
 fi
 
+# Finish program
 show_info "Executable installed in $EXEC_DIR and configuration files in $PROGRAM_DIR"
-show_info "The directory download should be empty now (if everything gone fine)."
+# Remove temporary directory
+rm -rf $TMP_DIR
 finish_program 0

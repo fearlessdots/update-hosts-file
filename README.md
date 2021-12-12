@@ -31,7 +31,7 @@ In this directory, you can place custom hosts files following the scheme below:
 ::1 localhost
 0.0.0.0 0.0.0.0
 ```
-To enable a module, move it to /modules/custom/enable and, to disable it, move it to /modules/custom/available.
+To enable a module, hard link it (do not use ln -s) to /modules/custom/enable and, to disable it, simply unlink it.
 
 **Note:** Two custom modules are provived as templates (by default, they are disabled). If you are going to keep Steven Black's hosts module enabled, there is no need to enable the `default` module (in /modules/custom/available/default) since the former already provides these hosts.
 
@@ -40,7 +40,7 @@ In this directory, you can place hosts files to be retrieved from the Web, follo
 ```
 https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts
 ```
-The name of the file will be used as the name of the module and the only content inside of the file should be the corresponding source URL for the hosts file. To enable a module, move it to /modules/web/enable and, to disable it, move it to /modules/web/available.
+The name of the file will be used as the name of the module and the only content inside of the file should be the corresponding source URL for the hosts file. To enable a module, hard link it (do not use ln -s) to /modules/web/enable and, to disable it, simply unlink it.
 
 **Note:** Steven Black's hosts is enabled by default. To deactivate it, simply move it to modules/web/available. For more info, visit the Steven Black's [official repo](https://github.com/StevenBlack/hosts/).
 
