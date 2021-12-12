@@ -1,0 +1,180 @@
+#!/bin/bash
+
+# GitHub repository: https://github.com/fearlessdots/update-hosts-file
+# RUN THIS SCRIPT AS ROOT
+# Warning: changing the values of the variables in this script may render it unworkable.
+
+PROGRAM_DIR=/usr/share/update-hosts-file
+MODULES_DIR=$PROGRAM_DIR/modules
+CUSTOM_MODULES_DIR=$MODULES_DIR/custom
+WEB_MODULES_DIR=$MODULES_DIR/web
+CONFIG_DIR=$PROGRAM_DIR/config
+BACKUP_DIR=$PROGRAM_DIR/backup
+HOSTS_FILE=/etc/hosts
+
+# Shell display functions
+show_info(){
+	echo "[ update-hosts-file ] $1"
+}
+
+show_attention(){
+	echo "[ ATTENTION ] $1"
+}
+
+finish_program()
+{
+	# $1 is the exit code
+	exit $1
+}
+
+# File editing functions
+insert_line(){
+	echo "$1" >> $HOSTS_FILE
+}
+
+insert_host()
+{
+	# ip_address=$1 and hostname=$2
+	insert_line "$1 $2"
+}
+
+insert_comment()
+{
+	insert_line "#$1"
+}
+
+# Main functions
+verify_integrity()
+{
+	if [ ! -d $CUSTOM_HOSTS_DIR ]
+	then
+		show_attention "Custom hosts directory not found in $CUSTOM_HOSTS_DIR. Please, verify it!"
+		finish_program 1
+	fi
+	if [ ! -d $CONFIG_DIR ]
+	then
+		show_attention "Configuration directory not found in $CONFIG_DIR. Please, verify it!"
+		finish_program 1
+	fi
+	if [ ! -d $BACKUP_DIR ]
+	then
+		show_attention "Backup directory not found in $BACKUP_DIR. Creating one..."
+	fi
+}
+
+backup_hostfile()
+{
+	show_info "Backup current /etc/hosts file in $PROGRAM_DIR/backup? Type 'backup' if yes."
+	read OPTION
+	if [ "$OPTION" = 'backup' ]
+	then
+		if [ -f $HOSTS_FILE ]
+		then
+			backup_file=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1).BACKUP
+			mv $HOSTS_FILE $BACKUP_DIR/$backup_file
+			show_info "Current /etc/hosts file backed up as $backup_file"
+		else
+			show_attention "/etc/hosts file not found!"
+		fi
+		show_info "Carrying on with the update process"
+	else
+		show_info "Carrying on with the update process. The current /etc/hosts file will be deleted."
+		rm $HOSTS_FILE
+	fi
+}
+
+load_custom_modules()
+{
+	show_info "Loading custom modules"
+	sleep 2
+
+	enabled_custom_modules=$(ls $CUSTOM_MODULES_DIR/enabled)
+
+	for module in $enabled_custom_modules
+	do
+		insert_line ""
+		insert_comment "Custom modules from $module"
+		show_info "Loading custom modules from $module"
+		while IFS= read -r line
+		do
+			# Enable the line below only for devolpment purposes
+			# echo $line
+			if [[ ! $line = '#'* && ! -z $line ]] # Exclude commented and empty lines
+			then
+				ip_address=$(echo $line | awk '{print $1}')
+				hostname=$(echo $line | awk '{print $2}')
+				insert_host $ip_address $hostname
+			fi
+		done < $CUSTOM_MODULES_DIR/enabled/$module
+		insert_line ""
+	done
+}
+
+load_web_modules()
+{
+	show_info "Loading hosts from selected web sources"
+	show_info "Make sure you have any kind of access to the Internet"
+	sleep 2
+
+	enabled_web_modules=$(ls $WEB_MODULES_DIR/enabled)
+
+	for module in $enabled_web_modules
+	do
+		module_source=$(cat $WEB_MODULES_DIR/enabled/$module)
+		module_temp_file=$TMP_DIR/$module
+		wget -O $module_temp_file $module_source
+
+		insert_line ""
+		insert_comment "Custom modules from $module"
+		show_info "Loading web modules from $module"
+		while IFS= read -r line
+		do
+			# Enable the line below only for devolpment purposes
+			# echo $line
+			if [[ ! $line = '#'* && ! -z $line ]] # Exclude commented and empty lines
+			then
+				#ip_address=$(echo $line | awk '{print $1}')
+				#hostname=$(echo $line | awk '{print $2}')
+				insert_line "$line"
+				#insert_host $ip_address $hostname
+			fi
+		done < $module_temp_file
+		insert_line ""
+	done
+}
+
+#
+##
+#
+
+# Create a temporary directory
+TMP_DIR=/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+mkdir $TMP_DIR
+
+# Verify program directories integrity
+verify_integrity
+
+# Backup current /etc/hosts file and remove file
+backup_hostfile
+
+# Write file header
+insert_comment "This file was edited by update-hosts-file."
+insert_comment "GitHub repository: https://github.com/fearlessdots/update-hosts-file"
+insert_comment "Thank you so much for using this program!"
+insert_line ""
+
+# Load custom modules
+load_custom_modules
+
+# Load hosts from selected web sources (according to config/hosts_sources)
+load_web_modules
+
+# Write file footer
+# DEFAULT FOOTER: none
+
+# Finish program
+lines_written=$(wc $HOSTS_FILE | awk '{print $1}')
+show_info "/etc/hosts file updated successfully! $lines_written lines were written."
+echo ""
+rm -rf $TMP_DIR
+finish_program 0

@@ -1,0 +1,72 @@
+
+#!/bin/bash
+
+# GitHub repository: https://github.com/fearlessdots/update-hosts-file
+# RUN THIS SCRIPT AS ROOT
+# Warning: changing the values of the variables in this script may render it unworkable.
+
+REPO_URL=https://github.com/fearlessdots/update-hosts-file
+BRANCH=main-x86_64
+
+# The values below refer to the installation directories. If needed to change them,
+# do it cautiously.
+PROGRAM_DIR=/usr/share/update-hosts-file
+EXEC_DIR=/usr/bin
+
+PROGRAM_DIR=/usr/share/update-hosts-file
+MODULES_DIR=$PROGRAM_DIR/modules
+CUSTOM_MODULES_DIR=$MODULES_DIR/custom
+WEB_MODULES_DIR=$MODULES_DIR/web
+CONFIG_DIR=$PROGRAM_DIR/config
+BACKUP_DIR=$PROGRAM_DIR/backup
+HOSTS_FILE=/etc/hosts
+
+# Shell display functions
+show_info(){
+	echo "$1"
+}
+
+show_attention(){
+	echo "[ ATTENTION ] $1"
+}
+
+finish_program()
+{
+	# $1 is the exit code
+	exit $1
+}
+
+#
+##
+#
+
+if [ "$1" = 'help' ]
+then
+	echo "Valid arguements (only one)"
+	echo "help => help page (this one you are reading =])"
+	echo "uninstall => uninstall the program from your computer"
+	echo "upgrade => upgrade your program using the main branch of the git repo"
+	echo "update => update /etc/hosts file"
+	echo "version => display current version"
+elif [ "$1" = 'uninstall' ]
+then
+  show_info "Program will be uninstalled"
+  $PROGRAM_DIR/bin/uninstall
+elif [ "$1" = 'upgrade' ]
+then
+  show_info "Program will be upgraded"
+  $PROGRAM_DIR/bin/upgrade
+elif [ "$1" = 'version' ]
+then
+  version=$(cat $CONFIG_DIR/about | grep version | sed '/version=/s///')
+  show_info "Current version: $version"
+elif [ "$1" = 'update' ]
+then
+  show_info "/etc/hosts will be updated"
+  $PROGRAM_DIR/bin/update
+else
+  show_attention "Invalid argument. Run 'update-hosts-file help to show valid arguments.'"
+  finish_program 1
+fi
+
+finish_program 0

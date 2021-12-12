@@ -1,0 +1,7 @@
+# THIS IS ONLY A TEMPLATE FILE
+
+# Write in this file all hosts to be automatically added to /etc/hosts when the main program is run
+# Follow the scheme below:
+# <ip_address> <hostname>
+
+127.0.0.1 localhost

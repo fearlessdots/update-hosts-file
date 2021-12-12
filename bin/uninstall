@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# GitHub repository: https://github.com/fearlessdots/update-hosts-file
+# RUN THIS SCRIPT AS ROOT
+# Warning: changing the values of the variables in this script may render it unworkable.
+
+# The values below refer to the installation directories. If needed to change them,
+# do it cautiously.
+PROGRAM_DIR=/usr/share/update-hosts-file
+EXEC_DIR=/usr/bin
+
+# Shell display functions
+show_info(){
+	echo "$1"
+}
+
+show_attention(){
+	echo "[ ATTENTION ] $1"
+}
+
+show_success(){
+	echo "[ SUCCESS ] $1"
+}
+
+finish_program()
+{
+	# $1 is the exit code
+	exit $1
+}
+
+#
+##
+#
+
+if [ ! -f $EXEC_DIR/update-hosts-file ]
+then
+  show_attention "Executable not found in $EXEC_DIR"
+  finish_program 1
+else
+  rm $EXEC_DIR/update-hosts-file
+  show_success "Executable found and removed"
+fi
+
+if [ ! -d $PROGRAM_DIR ]
+then
+  show_attention "Program directory not found as $PROGRAM_DIR"
+finish_program 1
+else
+  rm -rf $PROGRAM_DIR
+  show_success "Program directory found and removed"
+fi
+
+finish_program 0
