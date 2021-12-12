@@ -64,9 +64,9 @@ sudo ./install.sh
 ## Method 2 - Download ZIP File And Run
 Use the command you prefer, e.g. wget or curl. Running wget:
 ```bash
-wget https://github.com/fearlessdots/update-hosts-file/archive/refs/heads/main-x86_64.zip
-unzip main-x86_64.zip
-cd update-hosts-file-main-x86_64
+wget https://github.com/fearlessdots/update-hosts-file/archive/refs/heads/main.zip
+unzip main.zip
+cd update-hosts-file-main
 chmod +x install.sh
 sudo ./install.sh
 ```
