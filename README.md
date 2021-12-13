@@ -56,8 +56,8 @@ If you already have update-hosts-file program installed on your computer, simply
 ```bash
 git clone https://github.com/fearlessdots/update-hosts-file
 cd update-hosts-file
-chmod +x install.sh
-sudo ./install.sh
+chmod +x install
+sudo ./install
 ```
 **Attention:** by default, the executable will be installed in /usr/bin and the other configuration files in /usr/share/update-hosts-file. You can change this (not recommended) by modifying the variable values inside the installation script.
 
@@ -67,8 +67,8 @@ Use the command you prefer, e.g. wget or curl. Running wget:
 wget https://github.com/fearlessdots/update-hosts-file/archive/refs/heads/main-x86_64.zip
 unzip main-x86_64.zip
 cd update-hosts-file-main-x86_64
-chmod +x install.sh
-sudo ./install.sh
+chmod +x install
+sudo ./install
 ```
 **Attention:** by default, the executable will be installed in /usr/bin and the other configuration files in /usr/share/update-hosts-file. You can change this (not recommended) by modifying the variable values inside the installation script.
 
