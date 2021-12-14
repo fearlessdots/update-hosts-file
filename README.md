@@ -38,6 +38,7 @@ To enable a module, hard link it (do not use ln -s) to /modules/custom/enable an
 ## Web Modules
 In this directory, you can place hosts files to be retrieved from the Web, following the scheme below:
 ```
+# This is only a template
 https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts
 ```
 The name of the file will be used as the name of the module and the only content inside of the file should be the corresponding source URL for the hosts file. To enable a module, hard link it (do not use ln -s) to /modules/web/enable and, to disable it, simply unlink it.
