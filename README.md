@@ -54,6 +54,8 @@ Run `update-hosts-file help` to display valid arguments.
 If you already have update-hosts-file program installed on your computer, simply run `sudo ./install` once inside the downloaded directory/repository.
 
 ## Method 1 - Clone The Repository With GIT And Run
+This method of installation will always download the most updated repository, but there is no guarantee of stability.
+
 ```bash
 git clone https://github.com/fearlessdots/update-hosts-file
 cd update-hosts-file
@@ -63,6 +65,8 @@ sudo ./install
 **Attention:** by default, the executable will be installed in /usr/bin and the other configuration files in /usr/share/update-hosts-file. You can change this (not recommended) by modifying the variable values inside the installation script.
 
 ## Method 2 - Download ZIP File And Run
+This method of installation will always download the most recent release (sometimes outdated in comparison with the GIT repository). Downloading the most recent releases may be more stable than downloading the repository.
+
 Use the command you prefer, e.g. wget or curl. Running wget:
 ```bash
 wget https://github.com/fearlessdots/update-hosts-file/archive/refs/heads/main-x86_64.zip
