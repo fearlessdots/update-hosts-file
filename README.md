@@ -17,6 +17,8 @@ Source of image: [unDraw](https://undraw.co), a collection of open-source illust
 
 If you want to block ads and other hosts on Android, you can give a try to [AdAway](https://github.com/AdAway/adaway.github.io).
 
+**I am not related neither to AdAway nor to Steven Black. But for sure their work somehow inspired me to make this personal project.**
+
 # Modules
 Hosts files (called modules) that are enabled, either retrieved locally or from the web, are automatically added to /etc/hosts every time you run `update-hosts-file update`. Configurations can be found in /modules. All hosts file (local and web) should follow the same scheme:
 `<ip_address> <hostname>`. To comment a line, simply add a `#` in the start of it and the program will ignore it, skipping to the next line. For some help on how to configure properly the program, give a look at the templates provided by default.
