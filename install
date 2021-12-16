@@ -63,7 +63,7 @@ remove_old_program()
 	fi
 }
 
-keep_modules_installation()
+keep_custom_installation()
 {
 	if [ -d $MODULES_DIR ]
 	then
@@ -81,6 +81,17 @@ keep_modules_installation()
 		show_attention "Modules directory not found in $MODULES_DIR."
 		show_attention "A new directory will be installed instead."
 	fi
+
+	if [ -f $CONFIG_DIR/preferences ]
+	then
+		show_attention "Preferences file found in $CONFIG_DIR. Backing it up..."
+		# Backup current preferences file
+		mv $CONFIG_DIR/preferences $TMP_DIR/preferences
+	else
+		show_attention "Preferences file not found in $CONFIG_DIR"
+		show_attention "A new preferences file will be installed instead"
+	fi
+		
 	# Remove old program
 	remove_old_program
 	# Move executable to $EXEC_DIR
@@ -91,7 +102,16 @@ keep_modules_installation()
 	cp -R * $PROGRAM_DIR
 	# Substitute downloaded modules directory with the backed up one
 	rm -rf $PROGRAM_DIR/modules
-	cp -R $TMP_DIR/modules $PROGRAM_DIR/modules
+	if [ -d $TMP_DIR/modules ]
+	then
+		cp -R $TMP_DIR/modules $PROGRAM_DIR/modules
+	fi
+	# Substitute downloaded preferences file with backed up one
+	rm -rf $CONFIG_DIR/preferences
+	if [ -f $TMP_DIR/preferences ]
+	then
+		cp $TMP_DIR/preferences $CONFIG_DIR/preferences
+	fi
 	# Create remaining directories
 	mkdir $PROGRAM_DIR/backup
 	# Remove installation script
@@ -125,8 +145,9 @@ if [ -d $PROGRAM_DIR ]
 then
 	show_info "Program directory already exists in $PROGRAM_DIR. If you continue, everything"
 	show_info "inside it will be overwritten."
-	show_info "Type 'keep' to keep your custom hosts modules located in $CUSTOM_MODULES_DIR"
-	read KEEP_MODULES
+	show_info "Type 'keep' to keep your current modules directory located in $CUSTOM_MODULES_DIR and preferences in $CONFIG_DIR
+and preferences file in $CONFIG_DIR"
+	read KEEP_CUSTOM
 	show_info "Type 'aware' to continue with the installation process. Any other character will automatically cancel it."
 	read CONTINUE
 	if [ ! "$CONTINUE" = 'aware' ]
@@ -137,9 +158,9 @@ then
 		show_attention "Carrying on with the installation process"
 		#remove_old_program
 		#grant_permissions
-		if [ "$KEEP_MODULES" = 'keep' ]
+		if [ "$KEEP_CUSTOM" = 'keep' ]
 		then
-			keep_modules_installation
+			keep_custom_installation
 		else
 			remove_old_program
 			normal_installation
