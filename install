@@ -10,8 +10,6 @@ BRANCH=main-x86_64
 # do it cautiously.
 PROGRAM_DIR=/usr/share/update-hosts-file
 EXEC_DIR=/usr/bin
-
-PROGRAM_DIR=/usr/share/update-hosts-file
 MODULES_DIR=$PROGRAM_DIR/modules
 CUSTOM_MODULES_DIR=$MODULES_DIR/custom
 WEB_MODULES_DIR=$MODULES_DIR/web
