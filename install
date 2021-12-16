@@ -125,7 +125,7 @@ if [ -d $PROGRAM_DIR ]
 then
 	show_info "Program directory already exists in $PROGRAM_DIR. If you continue, everything"
 	show_info "inside it will be overwritten."
-	show_info "Type 'keep' to keep your custom hosts modules located in $CUSTOM_HOSTS_DIR"
+	show_info "Type 'keep' to keep your custom hosts modules located in $CUSTOM_MODULES_DIR"
 	read KEEP_MODULES
 	show_info "Type 'aware' to continue with the installation process. Any other character will automatically cancel it."
 	read CONTINUE
