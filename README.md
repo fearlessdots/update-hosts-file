@@ -52,6 +52,9 @@ The name of the file will be used as the name of the module and the only content
 ## Valid Arguments
 Run `update-hosts-file help` to display valid arguments.
 
+## Program Preferences
+You can change the program's default values (e.g., default text editor and viewer) by modifying `/config/preferences` file. By default, 'nano' is used as the editor and 'less' as the viewer (view/edit feature was added on version 1.2). Features from future releases will be inserted in this file as soon as they are released.
+
 # Methods Of Installation
 If you already have update-hosts-file program installed on your computer, simply run `sudo ./install` once inside the downloaded directory/repository.
 
