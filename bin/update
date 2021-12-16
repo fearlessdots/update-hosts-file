@@ -143,6 +143,22 @@ load_web_modules()
 	done
 }
 
+view_file()
+{
+	default_viewer=`cat $PROGRAM_DIR/config/preferences | grep DEFAULT_VIEWER | sed '/DEFAULT_VIEWER=/s///'`
+	show_info "Default viewer is $default_viewer"
+
+	$default_viewer $HOSTS_FILE
+}
+
+edit_file()
+{
+	default_editor=`cat $PROGRAM_DIR/config/preferences | grep DEFAULT_EDITOR | sed '/DEFAULT_EDITOR=/s///'`
+	show_info "Default editor is $default_editor"
+
+	$default_editor $HOSTS_FILE
+}
+
 #
 ##
 #
@@ -176,5 +192,24 @@ load_web_modules
 lines_written=$(wc $HOSTS_FILE | awk '{print $1}')
 show_info "/etc/hosts file updated successfully! $lines_written lines were written."
 echo ""
+rm -rf $TMP_DIR
+
+# Ask for user if is needed to view or edit the hosts file
+show_info "Do you want to edit or view the hosts file?
+	type 'e' to edit with the default editor, 'v' to view
+	with the default viewer or any other character
+	(including space) to skip and finish"
+read KEY
+
+if [ "$KEY" = 'e' ]
+then
+	edit_file
+elif [ "$KEY" = 'v' ]
+then
+	view_file
+else
+	show_info "Skipping and finishing program..."
+fi
+
 rm -rf $TMP_DIR
 finish_program 0

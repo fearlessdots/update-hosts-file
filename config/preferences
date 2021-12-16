@@ -1,0 +1,4 @@
+# Default editor (nano, vim, emacs, micro,...)
+DEFAULT_EDITOR=nano
+# Default viewer (less, cat, batcat,...)
+DEFAULT_VIEWER=less
