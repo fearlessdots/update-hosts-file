@@ -211,5 +211,4 @@ else
 	show_info "Skipping and finishing program..."
 fi
 
-rm -rf $TMP_DIR
 finish_program 0
