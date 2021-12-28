@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# GitHub repository: https://github.com/fearlessdots/update-hosts-file
 # RUN THIS SCRIPT AS ROOT
 # Warning: changing the values of the variables in this script may render it unworkable.
 
@@ -11,7 +10,7 @@ EXEC_DIR=/usr/bin
 
 # Shell display functions
 show_info(){
-	echo "$1"
+	echo "[  UpdateHostsFile  ] $1"
 }
 
 show_attention(){

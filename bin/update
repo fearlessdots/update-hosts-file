@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# GitHub repository: https://github.com/fearlessdots/update-hosts-file
 # RUN THIS SCRIPT AS ROOT
 # Warning: changing the values of the variables in this script may render it unworkable.
 
@@ -14,7 +13,7 @@ HOSTS_FILE=/etc/hosts
 
 # Shell display functions
 show_info(){
-	echo "[ update-hosts-file ] $1"
+	echo "[ UpdateHostsFile ] $1"
 }
 
 show_attention(){
@@ -79,7 +78,7 @@ verify_integrity()
 
 backup_hostfile()
 {
-	show_attention "Cleaning up backup directory if needed and backing up current /etc/hosts file in $PROGRAM_DIR/backup"
+	show_info "Cleaning up backup directory if needed and backing up current /etc/hosts file in $PROGRAM_DIR/backup"
 
 	# Clean up backup directory if above limit set by user
 	backup_dir_max_files=$(cat $CONFIG_DIR/preferences | grep MAX_BACKUP_FILES | awk '{print $2}')
@@ -233,6 +232,18 @@ load_web_modules
 
 # Write file footer
 # DEFAULT FOOTER: none
+
+# Automatically run upgrade script, if enabled
+auto_verify_upgrade=$(cat $CONFIG_DIR/preferences | grep AUTO_VERIFY_UPGRADE | awk '{print $2}')
+if [ "$auto_verify_upgrade" = 'true' ]
+then
+	show_info "Automatic verify upgrade feature is enabled. Running script..."
+	echo ""
+	$PROGRAM_DIR/bin/upgrade
+	echo ""
+else
+	show_info "Automatic verify upgrade feature is disable. Skipping..."
+fi
 
 # Finish program
 lines_written=$(wc $HOSTS_FILE | awk '{print $1}')

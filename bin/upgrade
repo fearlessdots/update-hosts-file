@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# GitHub repository: https://github.com/fearlessdots/update-hosts-file
 # RUN THIS SCRIPT AS ROOT
 # Warning: changing the values of the variables in this script may render it unworkable.
 
@@ -14,7 +13,7 @@ HOSTS_FILE=/etc/hosts
 
 # Shell display functions
 show_info(){
-	echo "$1"
+	echo "[  UpdateHostsFile  ] $1"
 }
 
 show_attention(){
@@ -34,18 +33,52 @@ get_latest_tag() {
 	echo $latest_tag
 }
 
+upgrade() {
+	# Create a temporary directory
+	TMP_DIR=/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+	show_info "Creating a temporary directory at $TMP_DIR"
+	mkdir $TMP_DIR
+
+	# Download latest zip file
+	show_info "Downloading zip file for the latest version"
+	wget --quiet -O $TMP_DIR/$latest_version.zip https://github.com/$repo_username/$repo_name/archive/refs/tags/$latest_version.zip
+
+	# Extract it ('-j' option to only extract the files inside of the zip file)
+	unzip -qq -j $TMP_DIR/$latest_version.zip -d $TMP_DIR/extracted
+
+	# Run install script
+	$TMP_DIR/extracted/install
+	show_info "Upgraded update-hosts-file to version $latest_version"
+	
+	# Delete temporary directory
+	rm -rf $TMP_DIR
+	
+	finish_program 0
+}
+
 verify_upgrade() {
-	current_version=$(cat $CONFIG_DIR/about | grep branch | awk '{print $2}')
+	current_version=$(cat $CONFIG_DIR/about | grep version | awk '{print $2}')
 	repo_username=$(cat $CONFIG_DIR/about | grep repo_username | awk '{print $2}')
 	repo_name=$(cat $CONFIG_DIR/about | grep repo_name | awk '{print $2}')
+	branch=$(cat $CONFIG_DIR/about | grep branch | awk '{print $2}')
 
 	show_info "Current version: $current_version"
 	
 	latest_version=$(get_latest_tag $repo_username $repo_name)
 
+	show_info "Latest version: $latest_version"
+
 	if [ ! "$current_version" = "$latest_version" ]
 	then
-		# Upgrade
+		show_info "A newer version was found. Upgrade? (Type 'upgrade' if yes)"
+		read CONTINUE
+		if [ "$CONTINUE" = 'upgrade' ]
+		then
+			upgrade
+		else
+			show_info "Exiting..."
+			finish_program 0
+		fi
 	else
 		show_info "update-hosts-file is already up to date."
 		finish_program 0
@@ -55,3 +88,5 @@ verify_upgrade() {
 #
 ##
 #
+
+verify_upgrade
