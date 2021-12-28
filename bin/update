@@ -140,7 +140,6 @@ restore_backup()
 load_web_modules()
 {
 	show_info "Loading hosts from selected web sources"
-	show_info "Make sure you have any kind of access to the Internet"
 	sleep 2
 
 	enabled_web_modules=$(ls $WEB_MODULES_DIR/enabled)
@@ -160,6 +159,7 @@ load_web_modules()
 			then
 				restore_backup
 			elif [ "$keep_on_host_unreachable" = 'true' ]
+			then
 				show_info "Skipping module..."
 			else
 				show_attention "Invalid option in preferences file for 'KEEP_ON_HOST_UNREACHABLE'."
