@@ -1,2 +1,5 @@
-version=1.4-x86_64
-repo_url=https://github.com/fearlessdots/update-hosts-file
+branch x86_64
+version 1.4-x86_64
+repo_url https://github.com/fearlessdots/update-hosts-file
+repo_username fearlessdots
+repo_name update-hosts-file

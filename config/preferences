@@ -6,3 +6,5 @@ DEFAULT_VIEWER less
 MAX_BACKUP_FILES 25
 # Tell the program to skip module (and not restore backup) if any web module source can not be reached
 KEEP_ON_HOST_UNREACHABLE false
+# Automatically verify if a newer version is available
+AUTO_VERIFY_UPGRADE true
