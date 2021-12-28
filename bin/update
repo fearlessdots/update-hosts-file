@@ -44,6 +44,21 @@ insert_comment()
 }
 
 # Main functions
+verify_internet_connection()
+{
+	# Temporary workaround
+	ping -c 1 -w 5 8.8.8.8 > /dev/null 2>&1
+	if [ ! $? -eq 0 ]
+	then
+		show_attention "Internet connection verification not passed. Finishing program..."
+		sleep 2
+		finish_program 1
+	else
+		show_info "Internet connection verification passed. Keeping on..."
+		sleep 2
+	fi
+}
+
 verify_integrity()
 {
 	if [ ! -d $CUSTOM_HOSTS_DIR ]
@@ -64,23 +79,26 @@ verify_integrity()
 
 backup_hostfile()
 {
-	show_info "Backup current /etc/hosts file in $PROGRAM_DIR/backup? Type 'backup' if yes."
-	read OPTION
-	if [ "$OPTION" = 'backup' ]
+	show_attention "Cleaning up backup directory if needed and backing up current /etc/hosts file in $PROGRAM_DIR/backup"
+
+	# Clean up backup directory if above limit set by user
+	backup_dir_max_files=$(cat $CONFIG_DIR/preferences | grep MAX_BACKUP_FILES | awk '{print $2}')
+	current_backup_files=$(ls $BACKUP_DIR | wc -l)
+	if [ $current_backup_files -gt $backup_dir_max_files ]
 	then
-		if [ -f $HOSTS_FILE ]
-		then
-			backup_file=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1).BACKUP
-			mv $HOSTS_FILE $BACKUP_DIR/$backup_file
-			show_info "Current /etc/hosts file backed up as $backup_file"
-		else
-			show_attention "/etc/hosts file not found!"
-		fi
-		show_info "Carrying on with the update process"
-	else
-		show_info "Carrying on with the update process. The current /etc/hosts file will be deleted."
-		rm $HOSTS_FILE
+		rm $BACKUP_DIR/*
 	fi
+
+	# Backup current hosts file
+	if [ -f $HOSTS_FILE ]
+	then
+		backup_file=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1).BACKUP
+		mv $HOSTS_FILE $BACKUP_DIR/$backup_file
+		show_info "Current /etc/hosts file backed up as $backup_file"
+	else
+		show_attention "/etc/hosts file not found!"
+	fi
+	show_info "Carrying on with the update process."
 }
 
 load_custom_modules()
@@ -110,6 +128,15 @@ load_custom_modules()
 	done
 }
 
+restore_backup()
+{
+	show_attention "An error occurred. Backup will be restored."
+	mv $BACKUP_DIR/$backup_file $HOSTS_FILE
+	show_info "Hosts file restored."
+
+	finish_program 1
+}
+
 load_web_modules()
 {
 	show_info "Loading hosts from selected web sources"
@@ -123,6 +150,22 @@ load_web_modules()
 		module_source=$(cat $WEB_MODULES_DIR/enabled/$module)
 		module_temp_file=$TMP_DIR/$module
 		wget -O $module_temp_file $module_source
+
+		# Verify if download process failed
+		if [ ! $? -eq 0 ]
+		then
+			show_attention "Source for $module could not be reached."
+			keep_on_host_unreachable=$(cat $CONFIG_DIR/preferences | grep KEEP_ON_HOST_UNREACHABLE | awk '{print $2}')
+			if [ "$keep_on_host_unreachable" = 'false' ]
+			then
+				restore_backup
+			elif [ "$keep_on_host_unreachable" = 'true' ]
+				show_info "Skipping module..."
+			else
+				show_attention "Invalid option in preferences file for 'KEEP_ON_HOST_UNREACHABLE'."
+				show_info "Skipping module..."
+			fi
+		fi
 
 		insert_line ""
 		insert_comment "Custom modules from $module"
@@ -145,7 +188,7 @@ load_web_modules()
 
 view_file()
 {
-	default_viewer=`cat $PROGRAM_DIR/config/preferences | grep DEFAULT_VIEWER | sed '/DEFAULT_VIEWER=/s///'`
+	default_viewer=$(cat $PROGRAM_DIR/config/preferences | grep DEFAULT_VIEWER | awk '{print $2}')
 	show_info "Default viewer is $default_viewer"
 
 	$default_viewer $HOSTS_FILE
@@ -153,7 +196,7 @@ view_file()
 
 edit_file()
 {
-	default_editor=`cat $PROGRAM_DIR/config/preferences | grep DEFAULT_EDITOR | sed '/DEFAULT_EDITOR=/s///'`
+	default_editor=$(cat $PROGRAM_DIR/config/preferences | grep DEFAULT_EDITOR | awk '{print $2}')
 	show_info "Default editor is $default_editor"
 
 	$default_editor $HOSTS_FILE
@@ -162,6 +205,9 @@ edit_file()
 #
 ##
 #
+
+# Verify internet connection
+verify_internet_connection
 
 # Create a temporary directory
 TMP_DIR=/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)

@@ -19,7 +19,7 @@ HOSTS_FILE=/etc/hosts
 
 # Shell display functions
 show_info(){
-	echo "$1"
+	echo "[  UpdateHostsFile  ] $1"
 }
 
 show_attention(){
@@ -67,7 +67,7 @@ keep_custom_installation()
 {
 	if [ -d $MODULES_DIR ]
 	then
-		show_attention "Modules directory found in $MODULES_DIR. Backing it up..."
+		show_info "Modules directory found in $MODULES_DIR. Backing it up..."
 		# Create a temporary directory
 		TMP_DIR=/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 		mkdir $TMP_DIR
@@ -79,17 +79,17 @@ keep_custom_installation()
 		#mv $MODULES_DIR .
 	else
 		show_attention "Modules directory not found in $MODULES_DIR."
-		show_attention "A new directory will be installed instead."
+		show_info "A new directory will be installed instead."
 	fi
 
 	if [ -f $CONFIG_DIR/preferences ]
 	then
-		show_attention "Preferences file found in $CONFIG_DIR. Backing it up..."
+		show_info "Preferences file found in $CONFIG_DIR. Backing it up..."
 		# Backup current preferences file
 		mv $CONFIG_DIR/preferences $TMP_DIR/preferences
 	else
 		show_attention "Preferences file not found in $CONFIG_DIR"
-		show_attention "A new preferences file will be installed instead"
+		show_info "A new preferences file will be installed instead"
 	fi
 		
 	# Remove old program
@@ -143,19 +143,26 @@ show_info "Executable will be installed in $EXEC_DIR"
 
 if [ -d $PROGRAM_DIR ]
 then
-	show_info "Program directory already exists in $PROGRAM_DIR. If you continue, everything"
-	show_info "inside it will be overwritten."
-	show_info "Type 'keep' to keep your current modules directory located in $CUSTOM_MODULES_DIR and preferences in $CONFIG_DIR
-and preferences file in $CONFIG_DIR"
+	show_info "Program directory already exists in $PROGRAM_DIR. If you continue, everything inside of it will be overwritten."
+
+	echo ""
+
+	show_info "Type 'keep' to keep your current modules directory located in $CUSTOM_MODULES_DIR and preferences file in $CONFIG_DIR/preferences."
 	read KEEP_CUSTOM
+
+	echo ""
+	
 	show_info "Type 'aware' to continue with the installation process. Any other character will automatically cancel it."
 	read CONTINUE
+
+	echo ""
+
 	if [ ! "$CONTINUE" = 'aware' ]
 	then
 		show_attention "Aborting installation process"
 		finish_program 1
 	else
-		show_attention "Carrying on with the installation process"
+		show_info "Carrying on with the installation process"
 		#remove_old_program
 		#grant_permissions
 		if [ "$KEEP_CUSTOM" = 'keep' ]
