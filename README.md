@@ -9,7 +9,7 @@ Script to help update the /etc/hosts file using custom hosts file from the Web (
 
 ---
 
-I believe **everyone** should have the right to browse the web without worries of being spied on or end up accessing a malicious website. If you also believe in this, give a try to Steven Black's work. The scripts found at this repository are just a way I (a newbie on Linux world and Shell language) found to make me safer online.
+I believe **everyone** should have the right to browse the web without worries of being spied on or end up accessing a malicious website. The scripts found at this repository are just a way I (a newbie on Linux world and Shell language) found to make me safer online.
 
 ![undraw_connected_world_wuay](https://user-images.githubusercontent.com/63175560/123716784-d6a4b080-d851-11eb-9c1d-f7fb3054f609.png)
 
