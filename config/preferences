@@ -4,5 +4,5 @@ DEFAULT_EDITOR nano
 DEFAULT_VIEWER less
 # Maximum number of files in backup directory
 MAX_BACKUP_FILES 25
-# Tell the program to skip module (and not restore backup) if any web module source can not be reached
+# Tell the program to skip module (and to not restore backup) if any web module source can not be reached
 KEEP_ON_HOST_UNREACHABLE false
