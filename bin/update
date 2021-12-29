@@ -13,7 +13,7 @@ HOSTS_FILE=/etc/hosts
 
 # Shell display functions
 show_info(){
-	echo "[ UpdateHostsFile ] $1"
+	echo "[  UpdateHostsFile  ] $1"
 }
 
 show_attention(){
