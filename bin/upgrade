@@ -80,7 +80,7 @@ verify_upgrade() {
 			finish_program 0
 		fi
 	else
-		show_info "update-hosts-file is already up to date."
+		show_info "update-hosts-file is already up-to-date."
 		finish_program 0
 	fi
 }
