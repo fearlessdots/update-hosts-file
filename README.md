@@ -55,7 +55,7 @@ Run `update-hosts-file help` to display valid arguments.
 ## Program Preferences
 You can change the program's default values (e.g., default text editor and viewer) by modifying `/config/preferences` file. By default, 'nano' is used as the editor and 'less' as the viewer (view/edit feature was added on version 1.2). All features can be found in this file. Give it a look! Features from future releases will be inserted in this file as soon as they are released.
 
-# Methods Of Installation And Upgrade
+# Installation
 During the installation process, you can choose whether you want to backup your current modules directory `/modules` and preferences file `/config/preferences` or just install fresh program files and executables (scripts).
 
 ## Method 1 - Clone The Repository With GIT And Run
