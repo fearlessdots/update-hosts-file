@@ -80,12 +80,12 @@ cd update-hosts-file-main-x86_64
 chmod +x install
 sudo ./install
 ```
-**Attention:** by default, the executable will be installed in /usr/bin and the other configuration files in /usr/share/update-hosts-file. You can change this (not recommended) by modifying the variable values inside the installation script
+**Attention:** by default, the executable will be installed in /usr/bin and the other configuration files in /usr/share/update-hosts-file. You can change this (not recommended) by modifying the variable values inside the installation script.
 
 # Upgrade
 
 ## Method 1 - Run the `install` script
-To upgrade, download the files found in this repository using any of the methods of installation and, once inside the downloaded directory, run `sudo ./install`
+To upgrade, download the files found in this repository using any of the methods of installation and, once inside the downloaded directory, run `sudo ./install`.
 
 ## Method 2 - Run `update-hosts-file upgrade`
 This method is available since version 1.5. It first verify if any newer version is available (compared to the one installed on your computer) and, if you accept, it downloads the zip file for the most recent version and run the `install` script found inside of it. It is possible to automate this process to make it run the `upgrade`script every time you issue the command `update-hosts-file update` (this automation is enabled by default). For more information, view the `preferences` file located in the configuration directory.
