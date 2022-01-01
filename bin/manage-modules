@@ -25,3 +25,4 @@ finish_program()
 	# $1 is the exit code
 	exit $1
 }
+
