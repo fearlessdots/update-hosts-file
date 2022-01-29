@@ -56,7 +56,13 @@ normal_installation()
 
 remove_old_program()
 {
-	rm -rf $PROGRAM_DIR
+	if [ -d $PROGRAM_DIR ]
+	then
+		rm -rf $PROGRAM_DIR
+	else
+		show_attention "Program directory not found. Make sure you removed it."
+	fi
+	
 	if [ -f $EXEC_DIR/update-hosts-file ]
 	then
 		rm $EXEC_DIR/update-hosts-file

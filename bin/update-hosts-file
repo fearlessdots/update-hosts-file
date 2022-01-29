@@ -44,6 +44,7 @@ then
 	echo "upgrade => upgrade your program using the main branch of the git repo"
 	echo "update => update /etc/hosts file"
 	echo "version => display current version"
+	echo "manage => manage web and custom modules (will enter into an interactive menu)"
 elif [ "$1" = 'uninstall' ]
 then
 	show_info "Program will be uninstalled"
@@ -60,6 +61,10 @@ elif [ "$1" = 'update' ]
 then
 	show_info "/etc/hosts will be updated"
 	$PROGRAM_DIR/bin/update
+elif [ "$1" = 'manage' ]
+then
+	show_info "Entering modules manager"
+	$PROGRAM_DIR/bin/manage-modules
 else
 	show_attention "Invalid argument. Run 'update-hosts-file help to show valid arguments.'"
 	finish_program 1

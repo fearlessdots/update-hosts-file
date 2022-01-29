@@ -10,6 +10,12 @@ WEB_MODULES_DIR=$MODULES_DIR/web
 CONFIG_DIR=$PROGRAM_DIR/config
 BACKUP_DIR=$PROGRAM_DIR/backup
 HOSTS_FILE=/etc/hosts
+DEFAULT_VIEWER=$(cat $CONFIG_DIR/preferences | grep DEFAULT_VIEWER | awk '{print $2}')
+DEFAULT_EDITOR=$(cat $CONFIG_DIR/preferences | grep DEFAULT_EDITOR | awk '{print $2}')
+
+#
+##
+#
 
 # Shell display functions
 show_info(){
@@ -22,7 +28,117 @@ show_attention(){
 
 finish_program()
 {
+	show_info "Finishing program..."
 	# $1 is the exit code
 	exit $1
 }
 
+#
+##
+#
+
+show_info "Entering option selection"
+select OPTION in enable disable quit
+do
+	case $OPTION in
+		enable)
+			show_info "Entering module type selection"
+			select MODULE_TYPE in web custom quit
+			do
+				case $MODULE_TYPE in
+					web)
+						show_info "Available web modules:"
+						available_modules=$(ls $WEB_MODULES_DIR/available)
+						select MODULE in $available_modules quit
+						do
+							if [ $MODULE = 'quit' ]
+							then
+								finish_program 0
+							fi
+							
+							show_info "Enabling module $MODULE"
+							if [ ! -f $WEB_MODULES_DIR/enabled/$MODULE ]
+							then
+								ln $WEB_MODULES_DIR/available/$MODULE $WEB_MODULES_DIR/enabled
+							else
+								show_info "Module $MODULE already enabled"
+							fi
+							
+							finish_program 0
+						done
+						;;
+					custom)
+						show_info "Available custom modules:"
+						available_modules=$(ls $CUSTOM_MODULES_DIR/available)
+						select MODULE in $available_modules quit
+						do
+							if [ $MODULE = 'quit' ]
+							then
+								finish_program 0
+							fi
+							
+							show_info "Enabling module $MODULE"
+							if [ ! -f $CUSTOM_MODULES_DIR/enabled/$MODULE ]
+							then
+								ln $CUSTOM_MODULES_DIR/available/$MODULE $CUSTOM_MODULES_DIR/enabled
+							else
+								show_info "Module $MODULE already enabled"
+							fi
+
+							finish_program 0
+						done
+						;;
+					quit)
+						finish_program 0
+						;;
+				esac
+			done
+				;;
+		disable)
+			show_info "Entering module type selection"
+			select MODULE_TYPE in web custom quit
+			do
+				case $MODULE_TYPE in
+					web)
+						show_info "Enabled web modules:"
+						enabled_modules=$(ls $WEB_MODULES_DIR/enabled)
+						select MODULE in $enabled_modules quit
+						do
+							if [ $MODULE = 'quit' ]
+							then
+								finish_program 0
+							fi
+							
+							show_info "Disabling module $MODULE"
+							rm $WEB_MODULES_DIR/enabled/$MODULE
+
+							finish_program 0
+						done
+						;;
+					custom)
+						show_info "Enabled custom modules:"
+						enabled_modules=$(ls $CUSTOM_MODULES_DIR/enabled)
+						select MODULE in $enabled_modules quit
+						do
+							if [ $MODULE = 'quit' ]
+							then
+								finish_program 0
+							fi
+							
+							show_info "Disabling module $MODULE"
+							rm $CUSTOM_MODULES_DIR/enabled/$MODULE
+
+							finish_program 0
+						done
+						;;
+					quit)
+						finish_program 0
+						;;
+				esac
+			done
+				;;
+		quit)
+			finish_program 0
+				;;
+	esac
+done
