@@ -37,6 +37,16 @@ To enable a module, hard link it (do not use ln -s) to /modules/custom/enable an
 
 **Note:** Two custom modules are provived as templates (by default, they are disabled). If you are going to keep Steven Black's hosts module enabled, there is no need to enable the `default` module (in /modules/custom/available/default) since the former already provides these hosts.
 
+> Since version 1.6, a module called *hostname* is automatically created during installation (or during an update without keeping personalized preferences and modules) with the following content:
+> 
+> ```shell
+> 127.0.0.1 <hostname>
+> ```
+>
+> *hostname* is the hostname of your computer
+>
+> This change fix the 'could not resolve hostname server' when trying to SSH into another computer.
+
 ## Web Modules
 In this directory, you can place hosts files to be retrieved from the Web, following the scheme below:
 ```

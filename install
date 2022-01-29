@@ -45,6 +45,9 @@ normal_installation()
 	# Enable default modules using hard links (available => enabled)
 	show_info "Enabling Steven Black's hosts file web module"
 	ln $PROGRAM_DIR/modules/web/available/stevenblack-fakenews-gambling-porn $PROGRAM_DIR/modules/web/enabled
+	# Create the 'hostname' module to fix hostname errors (e.g. when running a SSH shell)
+	echo "127.0.0.1 $(hostname)" > $PROGRAM_DIR/modules/custom/available/hostname
+	ln $PROGRAM_DIR/modules/custom/available/hostname $PROGRAM_DIR/modules/custom/enabled
 	# Remove installation script
 	rm $PROGRAM_DIR/install
 	# Grant permissions
