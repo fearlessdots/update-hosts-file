@@ -43,7 +43,7 @@ To enable a module, hard link it (do not use ln -s) to /modules/custom/enable an
 > 127.0.0.1 <hostname>
 > ```
 >
-> *hostname* is the hostname of your computer
+> *hostname* being the hostname of the computer where the installation is being made.
 >
 > This change fix the 'could not resolve hostname server' when trying to SSH into another computer.
 
