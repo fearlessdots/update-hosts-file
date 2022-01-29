@@ -1,6 +1,8 @@
 # update-hosts-file (Linux-based platforms only)
 ### Available platforms: Linux x86_64 and Raspberry Pi
 
+> For an experimental Docker version, see [this](https://github.com/fearlessdots/update-hosts-file-docker) repository.
+
 Script to help update the /etc/hosts file using custom hosts file from the Web (e.g. [Steven Black' hosts file](https://github.com/StevenBlack/hosts/ )) and other user custom hosts files. This program was tested on Linux X86_64 platform running Ubuntu 20.04/21.04 and on Raspberry Pi 3 Model B+ running Raspberry Pi OS.
 
 **Note:** this is only a personal project, and it is released under the GNU General Public License, Version 2.
