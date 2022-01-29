@@ -92,8 +92,9 @@ backup_hostfile()
 	if [ -f $HOSTS_FILE ]
 	then
 		backup_file=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1).BACKUP
-		mv $HOSTS_FILE $BACKUP_DIR/$backup_file
+		cp $HOSTS_FILE $BACKUP_DIR/$backup_file
 		show_info "Current /etc/hosts file backed up as $backup_file"
+		echo "" > /etc/hosts
 	else
 		show_attention "/etc/hosts file not found!"
 	fi
