@@ -1,7 +1,7 @@
 # Default editor (nano, vim, emacs, micro,...)
-DEFAULT_EDITOR micro
+DEFAULT_EDITOR nano
 # Default viewer (less, cat, batcat,...)
-DEFAULT_VIEWER batcat
+DEFAULT_VIEWER less
 # Maximum number of files in backup directory
 MAX_BACKUP_FILES 10
 # Tell the program to skip module (and to not restore backup) if any web module source can not be reached
