@@ -100,6 +100,15 @@ backup_hostfile()
 	show_info "Carrying on with the update process."
 }
 
+insert_hostname()
+{
+	show_info "Inserting the hostname"
+	insert_line ""
+	insert_line "# Hostname"
+	insert_host "127.0.0.1" $(cat /etc/hostname)
+	insert_line ""
+}
+
 load_custom_modules()
 {
 	show_info "Loading custom modules"
@@ -223,6 +232,9 @@ insert_comment "This file was edited by update-hosts-file."
 insert_comment "GitHub repository: https://github.com/fearlessdots/update-hosts-file"
 insert_comment "Thank you so much for using this program!"
 insert_line ""
+
+# Insert hostname
+insert_hostname
 
 # Load custom modules
 load_custom_modules
