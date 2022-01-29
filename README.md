@@ -104,7 +104,7 @@ This method is available since version 1.5. It first verifies if any newer versi
 The update-hosts-file software is released under the GNU General Public License Version 2.0 (GPL-2.0).
 
 ```
-Copyright (C) 2021 Filipe Bertelli
+Copyright (C) 2022 Filipe Bertelli
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
