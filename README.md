@@ -1,8 +1,6 @@
 # update-hosts-file (Linux-based platforms only)
 ### Available platforms: Linux x86_64 and Raspberry Pi
 
-**This program is not yet totally documented.**
-
 Script to help update the /etc/hosts file using custom hosts file from the Web (e.g. [Steven Black' hosts file](https://github.com/StevenBlack/hosts/ )) and other user custom hosts files. This program was tested on Linux X86_64 platform running Ubuntu 20.04/21.04 and on Raspberry Pi 3 Model B+ running Raspberry Pi OS.
 
 **Note:** this is only a personal project, and it is released under the GNU General Public License, Version 2.
@@ -23,9 +21,12 @@ If you want to block ads and other hosts on Android, you can give a try to [AdAw
 Hosts files (called modules) that are enabled, either retrieved locally or from the web, are automatically added to /etc/hosts every time you run `update-hosts-file update`. Configurations can be found in /modules. All hosts file (local and web) should follow the same scheme:
 `<ip_address> <hostname>`. To comment a line, simply add a `#` in the start of it and the program will ignore it, skipping to the next line. For some help on how to configure properly the program, give a look at the templates provided by default.
 
-**Note:** currently the process of enabling and disabling a module is manual (using CLI). Probably in the future I will add a script to make it easier.
+To enable or disable modules, run `update-hosts-file manage`. This is valid for both web and custom modules (for more info on what these terms stand for, see the sections below). 
 
 ## Custom Modules (local)
+
+Custom modules are files found in the computer (local files) that contains all the hosts and their corresponding IP addresses.These modules should be placed in the */modules/custom* directory inside the program directory (by default, */usr/share/update-hosts-file*).
+
 In this directory, you can place custom hosts files following the scheme below:
 ```
 # This is only a template
@@ -33,7 +34,7 @@ In this directory, you can place custom hosts files following the scheme below:
 ::1 localhost
 0.0.0.0 0.0.0.0
 ```
-To enable a module, hard link it (do not use ln -s) to /modules/custom/enable and, to disable it, simply unlink it.
+To enable a custom module, hard link it (do not use ln -s) to /modules/custom/enable and, to disable it, simply unlink it. Alternatively, run `update-hosts-file update` and select the appropriate options.
 
 **Note:** Two custom modules are provived as templates (by default, they are disabled). If you are going to keep Steven Black's hosts module enabled, there is no need to enable the `default` module (in /modules/custom/available/default) since the former already provides these hosts.
 
@@ -45,15 +46,20 @@ To enable a module, hard link it (do not use ln -s) to /modules/custom/enable an
 >
 > *hostname* being the hostname of the computer where the installation is being made.
 >
-> This change fix the 'could not resolve hostname server' when trying to SSH into another computer.
+> This change fix the 'could not resolve hostname' kind of error when trying to SSH into another computer.
 
 ## Web Modules
+
+Web modules are files found in the computer (local files) but that just contains a link to the corresponding hosts file. These modules should be placed in the */modules/web* directory inside the program directory (by default, */usr/share/update-hosts-file*).
+
 In this directory, you can place hosts files to be retrieved from the Web, following the scheme below:
 ```
 # This is only a template
 https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts
 ```
-The name of the file will be used as the name of the module and the only content inside of the file should be the corresponding source URL for the hosts file. To enable a module, hard link it (do not use ln -s) to /modules/web/enable and, to disable it, simply unlink it.
+The name of the file will be used as the name of the module and the only content inside of the file should be the corresponding source URL for the hosts file. 
+  
+To enable a web module, hard link it (do not use ln -s) to /modules/web/enable and, to disable it, simply unlink it. Alternatively, run `update-hosts-file update` and select the appropriate options.
 
 **Note:** Steven Black's hosts is enabled by default. To deactivate it, simply unlink it from modules/web/enabled. For more info, visit the Steven Black's [official repo](https://github.com/StevenBlack/hosts/).
 
