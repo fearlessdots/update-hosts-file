@@ -38,16 +38,6 @@ To enable a custom module, hard link it (do not use ln -s) to /modules/custom/en
 
 **Note:** Two custom modules are provived as templates (by default, they are disabled). If you are going to keep Steven Black's hosts module enabled, there is no need to enable the `default` module (in /modules/custom/available/default) since the former already provides these hosts.
 
-> Since version 1.6, a module called *hostname* is automatically created during installation (or during an update without keeping personalized preferences and modules) with the following content:
-> 
-> ```shell
-> 127.0.0.1 <hostname>
-> ```
->
-> *hostname* being the hostname of the computer where the installation is being made.
->
-> This change fix the 'could not resolve hostname' kind of error when trying to SSH into another computer.
-
 ## Web Modules
 
 Web modules are files found in the computer (local files) but that just contains a link to the corresponding hosts file. These modules should be placed in the */modules/web* directory inside the program directory (by default, */usr/share/update-hosts-file*).
