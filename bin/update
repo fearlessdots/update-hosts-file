@@ -91,7 +91,7 @@ backup_hostfile()
 	# Backup current hosts file
 	if [ -f $HOSTS_FILE ]
 	then
-		backup_file=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1).BACKUP
+		backup_file=$(date +%s | sha256sum | base64 | head -c 32 ; echo).BACKUP
 		cp $HOSTS_FILE $BACKUP_DIR/$backup_file
 		show_info "Current /etc/hosts file backed up as $backup_file"
 		#echo "" > /etc/hosts
@@ -218,7 +218,7 @@ edit_file()
 verify_internet_connection
 
 # Create a temporary directory
-TMP_DIR=/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+TMP_DIR=/tmp/$(date +%s | sha256sum | base64 | head -c 32 ; echo)
 show_info "Creating a temporary directory at $TMP_DIR"
 mkdir $TMP_DIR
 
@@ -276,7 +276,7 @@ echo ""
 rm -rf $TMP_DIR
 
 # Ask for user if is needed to view or edit the hosts file
-if [ ! "$1" = 'skip' ]
+if [ ! "$1" = 'skip' ] || [ ! "$1" = 'sysmd' ]
 then
 	show_info "Do you want to edit or view the hosts file?
 		type 'e' to edit with the default editor, 'v' to view

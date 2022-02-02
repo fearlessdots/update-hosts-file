@@ -54,6 +54,7 @@ if [ ! -f $SYSMD_DIR/updatehostsfile.service ]
 then
 	show_attention "Systemd service not found as $SYSMD_DIR/updatehostsfile.service"
 else
+	systemctl disable updatehostsfile.service
 	rm $SYSMD_DIR/updatehostsfile.service
 	show_success "Systemd service found and removed"
 fi

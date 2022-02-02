@@ -6,7 +6,7 @@ After=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/update-hosts-file update skip
+ExecStart=/usr/share/update-hosts-file/bin/update sysmd
 Restart=on-failure
 RestartSec=35
 KillMode=process
