@@ -23,7 +23,7 @@ If you want to block ads and other hosts on Android, you can give a try to [AdAw
 Hosts files (called modules) that are enabled, either retrieved locally or from the web, are automatically added to /etc/hosts every time you run `update-hosts-file update`. Configurations can be found in /modules. All hosts file (local and web) should follow the same scheme:
 `<ip_address> <hostname>`. To comment a line, simply add a `#` in the start of it and the program will ignore it, skipping to the next line. For some help on how to configure properly the program, give a look at the templates provided by default.
 
-To enable or disable modules, run `update-hosts-file manage`. This is valid for both web and custom modules (for more info on what these terms stand for, see the sections below). 
+To enable/disable modules and export/import the whole modules directory, run `update-hosts-file manage`. This is valid for both web and custom modules (for more info on what these terms stand for, see the sections below).
 
 ## Custom Modules (local)
 
