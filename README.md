@@ -97,7 +97,7 @@ sudo ./install
 # Upgrade
 
 > If possible, it is recommended to do a clean install:
-> 1. Backup the modules directory: **`update-hosts-file manage`** and follow the instructions
+> 1. Back up the modules directory: **`update-hosts-file manage`** and follow the instructions
 > 2. Uninstall the program: **`update-hosts-file uninstall`**
 > 3. Get the latest version by the methods shown in the [Installation](#installation) section.
 > 4. Install the program: **`sudo ./install`**
