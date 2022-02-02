@@ -83,10 +83,10 @@ normal_installation()
 		then
 			enable_stevenblack_module "stevenblack-porn-gambling-fakenews-social"
 			break
-		elif [ "$OPTION" = 'skip' ]
+		elif [ "$OPTION" = '6' ]
 		then
 			show_info "Skipping. You can enable/disable custom and web modules later by running 'update-hosts-file manage'."
-			show_info "The 'default' module will be enabled to avoid letting the hosts file blank. Disable it when you enable any Steven Black module later to avoid duplicates."
+			show_info "The 'default' module will be enabled to avoid letting the hosts file blank. Disable it whenever you enable any Steven Black module later to avoid duplicates."
 			ln -s $PROGRAM_DIR/modules/custom/available/default $PROGRAM_DIR/modules/custom/enabled
 			break
 		else

@@ -38,7 +38,7 @@ finish_program()
 #
 
 show_info "Entering option selection"
-select OPTION in enable disable quit
+select OPTION in enable disable export import quit
 do
 	case $OPTION in
 		enable)
@@ -136,6 +136,65 @@ do
 						;;
 				esac
 			done
+				;;
+		export)
+			show_info "Insert the full path to the destination folder for the exported file. Leave blank for the default (tmp)."
+			read EXPORT_LOCATION
+
+			if [ -z "$EXPORT_LOCATION" ]
+			then
+				EXPORT_LOCATION='/tmp'
+			fi
+
+			# Create a temporary directory
+			TOKEN=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
+			TMP_DIR=/tmp/$TOKEN
+			show_info "Creating a temporary directory at $TMP_DIR"
+			mkdir $TMP_DIR
+			cd $TMP_DIR
+
+			show_info "Syncing current modules with rsync and compressing it with zip"
+			rsync -razvhLP $MODULES_DIR .
+			zip -r $EXPORT_LOCATION/updatehostsfile-backup-$TOKEN.zip ./modules
+			show_info "Exported file saved as $EXPORT_LOCATION/updatehostsfile-backup-$TOKEN.zip"
+
+			# Delete the temporary directory
+			show_info "Deleting the temporary directory"
+			rm -rf $TMP_DIR
+
+			finish_program 0
+				;;
+		import)
+			show_info "Insert the full path to the modules backup file you want to import."
+			read IMPORT_LOCATION
+
+			if [ ! -f $IMPORT_LOCATION ] || [ -z $IMPORT_LOCATION ]
+			then
+				show_attention "$IMPORT_LOCATION file does not exist"
+				finish_program 1
+			fi
+
+			# Create a temporary directory
+			TMP_DIR=/tmp/$(date +%s | sha256sum | base64 | head -c 32 ; echo)
+			show_info "Creating a temporary directory at $TMP_DIR"
+			mkdir $TMP_DIR
+			cd $TMP_DIR
+
+			# Copy backup file to $TMP_DIR
+			show_info "Copying the backup file to $TMP_DIR and uncompressing it..."
+			cp $IMPORT_LOCATION .
+			unzip $IMPORT_LOCATION
+
+			# Syncing backed up modules to $MODULES_DIR
+			show_info "Syncing backed up modules to modules directory at $MODULES_DIR"
+			rsync -razvhuPL ./modules $MODULES_DIR/
+			show_info "Backed up modules synced to $MODULES_DIR"
+
+			# Delete the temporary directory
+			show_info "Deleting the temporary directory"
+			rm -rf $TMP_DIR
+			
+			finish_program 0
 				;;
 		quit)
 			finish_program 0
