@@ -58,7 +58,7 @@ normal_installation()
 3 - Unified Hosts + Porn + Gambling
 4 - Unified Hosts + Porn + Gambling + Fake News
 5 - Unified Hosts + Porn + Gambling + Fake News + Social
-skip - If you do not want to enable any Steven Black module right now."""
+6 - skip: if you do not want to enable any Steven Black module right now."""
 
 	while :
 	do
@@ -86,6 +86,8 @@ skip - If you do not want to enable any Steven Black module right now."""
 		elif [ "$OPTION" = 'skip' ]
 		then
 			show_info "Skipping. You can enable/disable custom and web modules later by running 'update-hosts-file manage'."
+			show_info "The 'default' module will be enabled to avoid letting the hosts file blank. Disable it when you enable any Steven Black module later to avoid duplicates."
+			ln -s $PROGRAM_DIR/modules/custom/available/default $PROGRAM_DIR/modules/custom/enabled
 			break
 		else
 			show_attention "Invalid option. Try again."
