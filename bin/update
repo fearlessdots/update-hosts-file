@@ -186,8 +186,8 @@ load_web_modules()
 			then
 				#ip_address=$(echo $line | awk '{print $1}')
 				#hostname=$(echo $line | awk '{print $2}')
-				insert_line "$line"
 				#insert_host $ip_address $hostname
+				insert_line "$line"
 			fi
 		done < $module_temp_file
 		insert_line ""

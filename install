@@ -15,14 +15,16 @@ WEB_MODULES_DIR=$MODULES_DIR/web
 CONFIG_DIR=$PROGRAM_DIR/config
 BACKUP_DIR=$PROGRAM_DIR/backup
 HOSTS_FILE=/etc/hosts
-SYSMD_DIR="/usr/lib/systemd/system"
+SYSMD_DIR=/usr/lib/systemd/system
 
 # Shell display functions
-show_info(){
+show_info()
+{
 	echo "[  UpdateHostsFile  ] $1"
 }
 
-show_attention(){
+show_attention()
+{
 	echo "[ ATTENTION ] $1"
 }
 
@@ -33,6 +35,12 @@ finish_program()
 }
 
 # Main functions
+enable_stevenblack_module()
+{
+	show_info "Enabling $1 web module"
+	ln "$PROGRAM_DIR/modules/web/available/$1" $PROGRAM_DIR/modules/web/enabled
+}
+
 normal_installation()
 {
 	# Move executable to $EXEC_DIR
@@ -44,11 +52,46 @@ normal_installation()
 	# Create remaining directories
 	mkdir $PROGRAM_DIR/backup $PROGRAM_DIR/modules/web/enabled $PROGRAM_DIR/modules/custom/enabled
 	# Enable default modules using hard links (available => enabled)
-	show_info "Enabling Steven Black's hosts file web module"
-	ln $PROGRAM_DIR/modules/web/available/stevenblack-fakenews-gambling-porn $PROGRAM_DIR/modules/web/enabled
-	# Create the 'hostname' module to fix hostname errors (e.g. when running a SSH shell)
-	#echo "127.0.0.1 $(hostname)" > $PROGRAM_DIR/modules/custom/available/hostname
-	#ln $PROGRAM_DIR/modules/custom/available/hostname $PROGRAM_DIR/modules/custom/enabled
+	show_info """By default, there are 5 Steven Black web modules available. Choose one below:
+1 - Unified Hosts
+2 - Unified Hosts + Porn
+3 - Unified Hosts + Porn + Gambling
+4 - Unified Hosts + Porn + Gambling + Fake News
+5 - Unified Hosts + Porn + Gambling + Fake News + Social
+skip - If you do not want to enable any Steven Black module right now."""
+
+	while :
+	do
+		read OPTION
+		if [ "$OPTION" = '1' ]
+		then
+			enable_stevenblack_module "stevenblack"
+			break
+		elif [ "$OPTION" = '2' ]
+		then
+			enable_stevenblack_module "stevenblack-porn"
+			break
+		elif [ "$OPTION" = '3' ]
+		then
+			enable_stevenblack_module "stevenblack-porn-gambling"
+			break
+		elif [ "$OPTION" = '4' ]
+		then
+			enable_stevenblack_module "stevenblack-porn-gambling-fakenews"
+			break
+		elif [ "$OPTION" = '5' ]
+		then
+			enable_stevenblack_module "stevenblack-porn-gambling-fakenews-social"
+			break
+		elif [ "$OPTION" = 'skip' ]
+		then
+			show_info "Skipping. You can enable/disable custom and web modules later by running 'update-hosts-file manage'."
+			break
+		else
+			show_attention "Invalid option. Try again."
+		fi
+	done
+
 	# Remove installation script
 	rm $PROGRAM_DIR/install
 	# Grant permissions
@@ -83,12 +126,8 @@ keep_custom_installation()
 		# Create a temporary directory
 		TMP_DIR=/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 		mkdir $TMP_DIR
-		# Remove modules directory downloaded
-		#rm -rf modules
 		# Backup current modules directory
 		mv $MODULES_DIR $TMP_DIR/modules
-		# And replace it with the current one
-		#mv $MODULES_DIR .
 	else
 		show_attention "Modules directory not found in $MODULES_DIR."
 		show_info "A new directory will be installed instead."
@@ -175,7 +214,6 @@ then
 		finish_program 1
 	else
 		show_info "Carrying on with the installation process"
-		#remove_old_program
 		#grant_permissions
 		if [ "$KEEP_CUSTOM" = 'keep' ]
 		then
