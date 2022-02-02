@@ -107,7 +107,6 @@ insert_hostname()
 	insert_line ""
 	insert_line "# Hostname"
 	insert_host "127.0.0.1" $(cat /etc/hostname)
-	insert_line ""
 }
 
 load_custom_modules()
