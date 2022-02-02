@@ -55,6 +55,10 @@ To enable a web module, hard link it (do not use ln -s) to /modules/web/enable a
 
 **Note:** Steven Black's hosts is enabled by default. To deactivate it, simply unlink it from modules/web/enabled. For more info, visit the Steven Black's [official repo](https://github.com/StevenBlack/hosts/).
 
+# Systemd Service
+
+Since version *1.9-x86_64*, it is possible to run the **`update-hosts-file`** program on boot. The service file is installed when running the **`install`** script, but it is not enabled by default. To enable it run **`update-hosts-file enable`**, and to disable it **`update-hosts-file disable`**.
+
 # Additional Help
 
 ## Valid Arguments
