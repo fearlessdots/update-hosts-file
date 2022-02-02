@@ -42,7 +42,10 @@ then
 	echo "help => help page (this one you are reading =])"
 	echo "uninstall => uninstall the program from your computer"
 	echo "upgrade => upgrade your program using the main branch of the git repo"
+	echo "enable => enable systemd service"
+	echo "disable => disable systemd service"
 	echo "update => update /etc/hosts file"
+	echo "update skip => update /etc/hosts file without any user intervetion (e.g. to be used by a systemd service)"
 	echo "version => display current version"
 	echo "manage => manage web and custom modules (will enter into an interactive menu)"
 elif [ "$1" = 'uninstall' ]
@@ -60,11 +63,19 @@ then
 elif [ "$1" = 'update' ]
 then
 	show_info "/etc/hosts will be updated"
-	$PROGRAM_DIR/bin/update
+	$PROGRAM_DIR/bin/update $2
 elif [ "$1" = 'manage' ]
 then
 	show_info "Entering modules manager"
 	$PROGRAM_DIR/bin/manage-modules
+elif [ "$1" = 'enable' ]
+then
+	show_info "Enabling systemd service"
+	systemctl enable updatehostsfile.service
+elif [ "$1" = 'disable' ]
+then
+	show_info "Disabling systemd service"
+	systemctl disable updatehostsfile.service
 else
 	show_attention "Invalid argument. Run 'update-hosts-file help to show valid arguments.'"
 	finish_program 1

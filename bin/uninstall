@@ -7,6 +7,7 @@
 # do it cautiously.
 PROGRAM_DIR=/usr/share/update-hosts-file
 EXEC_DIR=/usr/bin
+SYSMD_DIR=/usr/lib/systemd/system
 
 # Shell display functions
 show_info(){
@@ -47,6 +48,14 @@ finish_program 1
 else
   rm -rf $PROGRAM_DIR
   show_success "Program directory found and removed"
+fi
+
+if [ ! -f $SYSMD_DIR/updatehostsfile.service ]
+then
+	show_attention "Systemd service not found as $SYSMD_DIR/updatehostsfile.service"
+else
+	rm $SYSMD_DIR/updatehostsfile.service
+	show_success "Systemd service found and removed"
 fi
 
 finish_program 0
