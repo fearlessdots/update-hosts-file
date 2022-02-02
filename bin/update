@@ -276,7 +276,7 @@ echo ""
 rm -rf $TMP_DIR
 
 # Ask for user if is needed to view or edit the hosts file
-if [ ! "$1" = 'skip' ] || [ ! "$1" = 'sysmd' ]
+if [ ! "$1" = 'skip' ]
 then
 	show_info "Do you want to edit or view the hosts file?
 		type 'e' to edit with the default editor, 'v' to view
