@@ -53,7 +53,7 @@ The name of the file will be used as the name of the module and the only content
   
 To enable a web module, hard link it (do not use ln -s) to /modules/web/enable and, to disable it, simply unlink it. Alternatively, run `update-hosts-file update` and select the appropriate options.
 
-**Note:** Steven Black's hosts is enabled by default. To deactivate it, simply unlink it from modules/web/enabled. For more info, visit the Steven Black's [official repo](https://github.com/StevenBlack/hosts/).
+**Note:** During the installation process, you will be asked which Steven Black module you will want to enable. You can also choose to enable none at all. You can always manage web/custom modules by running **`update-hosts-file manage`**. For more info on available hosts files, visit the Steven Black's [official repo](https://github.com/StevenBlack/hosts/).
 
 # Systemd Service
 
