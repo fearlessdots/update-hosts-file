@@ -1,5 +1,5 @@
 branch main-x86_64
-version 1.8-x86_64
+version 1.9-x86_64
 repo_url https://github.com/fearlessdots/update-hosts-file
 repo_username fearlessdots
 repo_name update-hosts-file
