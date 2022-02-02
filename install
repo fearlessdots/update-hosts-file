@@ -18,14 +18,17 @@ HOSTS_FILE=/etc/hosts
 SYSMD_DIR=/usr/lib/systemd/system
 
 # Shell display functions
-show_info()
-{
-	echo "[  UpdateHostsFile  ] $1"
+show_info(){
+	echo "$(tput setaf 25)[  UpdateHostsFile  ]$(tput sgr0) $(tput setaf 250)$1$(tput sgr0)"
 }
 
 show_attention()
 {
-	echo "[ ATTENTION ] $1"
+	echo "$(tput setaf 9)[ ATTENTION ]$(tput sgr0) $(tput setaf 7)$1$(tput sgr0)"
+}
+
+show_success(){
+	echo "$(tput setaf 14)[ SUCCESS ]$(tput sgr0) $(tput setaf 26)$1$(tput sgr0)"
 }
 
 finish_program()
@@ -230,7 +233,7 @@ else
 fi
 
 # Finish program
-show_info "Executable installed in $EXEC_DIR and configuration files in $PROGRAM_DIR"
+show_success "Program installed succesfully!"
 # Remove temporary directory
 rm -rf $TMP_DIR
 finish_program 0
