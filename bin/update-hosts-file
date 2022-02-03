@@ -60,7 +60,7 @@ then
 elif [ "$1" = 'version' ]
 then
 	version=$(cat $CONFIG_DIR/about | grep version | awk '{print $2}')
-	show_info "Current version: $version"
+	show_info "Current version: $(tput setaf 11)$version$(tput sgr0)"
 elif [ "$1" = 'update' ]
 then
 	show_info "/etc/hosts will be updated"
