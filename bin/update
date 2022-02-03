@@ -259,15 +259,18 @@ echo "" > $HOSTS_FILE
 cp $TMP_HOSTS_FILE $HOSTS_FILE
 
 # Automatically run upgrade script, if enabled
-auto_verify_upgrade=$(cat $CONFIG_DIR/preferences | grep AUTO_VERIFY_UPGRADE | awk '{print $2}')
-if [ "$auto_verify_upgrade" = 'true' ]
+if [ ! "$1" = 'skip' ]
 then
-	show_info "Automatic verify upgrade feature is enabled. Running script..."
-	echo ""
-	$PROGRAM_DIR/bin/upgrade
-	echo ""
-else
-	show_info "Automatic verify upgrade feature is disable. Skipping..."
+	auto_verify_upgrade=$(cat $CONFIG_DIR/preferences | grep AUTO_VERIFY_UPGRADE | awk '{print $2}')
+	if [ "$auto_verify_upgrade" = 'true' ]
+	then
+		show_info "Automatic verify upgrade feature is enabled. Running script..."
+		echo ""
+		$PROGRAM_DIR/bin/upgrade
+		echo ""
+	else
+		show_info "Automatic verify upgrade feature is disable. Skipping..."
+	fi
 fi
 
 # Finish program
