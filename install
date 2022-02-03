@@ -19,7 +19,7 @@ SYSMD_DIR=/usr/lib/systemd/system
 
 # Shell display functions
 show_info(){
-	echo "$(tput setaf 25)[  UpdateHostsFile  ]$(tput sgr0) $(tput setaf 250)$1$(tput sgr0)"
+	echo "$(tput setaf 26)[  UpdateHostsFile  ]$(tput sgr0) $(tput setaf 250)$1$(tput sgr0)"
 }
 
 show_attention()
@@ -56,12 +56,12 @@ normal_installation()
 	mkdir $PROGRAM_DIR/backup $PROGRAM_DIR/modules/web/enabled $PROGRAM_DIR/modules/custom/enabled
 	# Enable default modules using hard links (available => enabled)
 	show_info """By default, there are 5 Steven Black web modules available. Choose one below:
-1 - Unified Hosts
-2 - Unified Hosts + Porn
-3 - Unified Hosts + Porn + Gambling
-4 - Unified Hosts + Porn + Gambling + Fake News
-5 - Unified Hosts + Porn + Gambling + Fake News + Social
-6 - skip: if you do not want to enable any Steven Black module right now."""
+$(tput setaf 11)1$(tput sgr0) - Unified Hosts
+$(tput setaf 11)2$(tput sgr0) - Unified Hosts + Porn
+$(tput setaf 11)3$(tput sgr0) - Unified Hosts + Porn + Gambling
+$(tput setaf 11)4$(tput sgr0) - Unified Hosts + Porn + Gambling + Fake News
+$(tput setaf 11)5$(tput sgr0) - Unified Hosts + Porn + Gambling + Fake News + Social
+$(tput setaf 11)6$(tput sgr0) - skip: if you do not want to enable any Steven Black module right now."""
 
 	while :
 	do

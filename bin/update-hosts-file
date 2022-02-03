@@ -19,12 +19,12 @@ HOSTS_FILE=/etc/hosts
 
 # Shell display functions
 show_info(){
-	echo "$(tput setaf 25)[  UpdateHostsFile  ]$(tput sgr0) $(tput setaf 250)$1$(tput sgr0)"
+	echo "$(tput setaf 26)[  UpdateHostsFile  ]$(tput sgr0) $(tput setaf 250)$1$(tput sgr0)"
 }
 
 show_attention()
 {
-	echo "$(tput setaf 9)[ ATTENTION ]$(tput sgr0) $(tput setaf 250)$1$(tput sgr0)"
+	echo "$(tput setaf 9)[ ATTENTION ]$(tput sgr0) $(tput setaf 7)$1$(tput sgr0)"
 }
 
 finish_program()
