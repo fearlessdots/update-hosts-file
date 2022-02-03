@@ -102,7 +102,7 @@ $(tput setaf 11)6$(tput sgr0) - skip: if you do not want to enable any Steven Bl
 	# Grant permissions
 	grant_permissions
 	# Move systemd service to the default SYSMD_DIR
-	show_info "Copying systemd service to $SYSMD_DIR. If you want to enable it, run 'update-hosts-file enable'."
+	show_info "Copying systemd service to $SYSMD_DIR. If you want to enable it, run $(tput setaf 14)update-hosts-file enable$(tput sgr0)."
 	cp updatehostsfile.service $SYSMD_DIR
 }
 
@@ -203,12 +203,12 @@ then
 
 	echo ""
 
-	show_info "Type 'keep' to keep your current modules directory located in $CUSTOM_MODULES_DIR and preferences file in $CONFIG_DIR/preferences."
+	show_info "Type $(tput setaf 11)keep$(tput setaf 250) to keep your current modules directory located in $CUSTOM_MODULES_DIR and preferences file in $CONFIG_DIR/preferences."
 	read KEEP_CUSTOM
 
 	echo ""
 	
-	show_info "Type 'aware' to continue with the installation process. Any other character will automatically cancel it."
+	show_info "Type $(tput setaf 11)aware$(tput setaf 250) to continue with the installation process. Any other character will automatically cancel it."
 	read CONTINUE
 
 	echo ""

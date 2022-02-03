@@ -150,14 +150,14 @@ do
 			# Create a temporary directory
 			TOKEN=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
 			TMP_DIR=/tmp/$TOKEN
-			show_info "Creating a temporary directory at $TMP_DIR"
+			show_info "Creating a temporary directory at $(tput setaf 14)$TMP_DIR$(tput sgr0)"
 			mkdir $TMP_DIR
 			cd $TMP_DIR
 
 			show_info "Syncing current modules with rsync and compressing it with zip"
 			rsync -razvhLP $MODULES_DIR .
 			zip -r $EXPORT_LOCATION/updatehostsfile-backup-$TOKEN.zip ./modules
-			show_info "Exported file saved as $EXPORT_LOCATION/updatehostsfile-backup-$TOKEN.zip"
+			show_info "Exported file saved as $(tput setaf 14)$EXPORT_LOCATION/updatehostsfile-backup-$TOKEN.zip$(tput sgr0)"
 
 			# Delete the temporary directory
 			show_info "Deleting the temporary directory"
@@ -177,7 +177,7 @@ do
 
 			# Create a temporary directory
 			TMP_DIR=/tmp/$(date +%s | sha256sum | base64 | head -c 32 ; echo)
-			show_info "Creating a temporary directory at $TMP_DIR"
+			show_info "Creating a temporary directory at $(tput setaf 14)$TMP_DIR$(tput sgr0)"
 			mkdir $TMP_DIR
 			cd $TMP_DIR
 

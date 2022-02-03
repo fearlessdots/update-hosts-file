@@ -94,7 +94,7 @@ backup_hostfile()
 	then
 		backup_file=$(date +%s | sha256sum | base64 | head -c 32 ; echo).BACKUP
 		cp $HOSTS_FILE $BACKUP_DIR/$backup_file
-		show_info "Current /etc/hosts file backed up as $backup_file"
+		show_info "Current /etc/hosts file backed up as $(tput setaf 14)$backup_file$(tput sgr0)"
 		#echo "" > /etc/hosts
 	else
 		show_attention "/etc/hosts file not found!"
@@ -220,7 +220,7 @@ verify_internet_connection
 
 # Create a temporary directory
 TMP_DIR=/tmp/$(date +%s | sha256sum | base64 | head -c 32 ; echo)
-show_info "Creating a temporary directory at $TMP_DIR"
+show_info "Creating a temporary directory at $(tput setaf 14)$TMP_DIR$(tput sgr0)"
 mkdir $TMP_DIR
 
 # Verify program directories integrity
@@ -280,7 +280,7 @@ rm -rf $TMP_DIR
 if [ ! "$1" = 'skip' ]
 then
 	show_info "Do you want to edit or view the hosts file?
-		type 'e' to edit with the default editor, 'v' to view
+		type $(tput setaf 11)e$(tput setaf 250) to edit with the default editor, $(tput setaf 11)v$(tput setaf 250) to view
 		with the default viewer or any other character
 		(including space) to skip and finish"
 	read KEY

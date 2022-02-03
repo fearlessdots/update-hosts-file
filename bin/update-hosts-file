@@ -40,15 +40,15 @@ finish_program()
 if [ "$1" = 'help' ]
 then
 	echo "Valid arguements (only one)"
-	echo "help => help page (this one you are reading =])"
-	echo "uninstall => uninstall the program from your computer"
-	echo "upgrade => upgrade your program using the main branch of the git repo"
-	echo "enable => enable systemd service"
-	echo "disable => disable systemd service"
-	echo "update => update /etc/hosts file"
-	echo "update skip => update /etc/hosts file without any user intervetion (e.g. to be used by a systemd service)"
-	echo "version => display current version"
-	echo "manage => manage web and custom modules (will enter into an interactive menu)"
+	echo "$(tput setaf 11)help$(tput sgr0)   $(tput setaf 14)help page (this one you are reading =])$(tput sgr0)"
+	echo "$(tput setaf 11)uninstall$(tput sgr0)   $(tput setaf 14)uninstall the program from your computer$(tput sgr0)"
+	echo "$(tput setaf 11)upgrade$(tput sgr0)   $(tput setaf 14)upgrade your program using the main branch of the git repo$(tput sgr0)"
+	echo "$(tput setaf 11)enable$(tput sgr0)   $(tput setaf 14)enable systemd service$(tput sgr0)"
+	echo "$(tput setaf 11)disable$(tput sgr0)   $(tput setaf 14)disable systemd service$(tput sgr0)"
+	echo "$(tput setaf 11)update$(tput sgr0)   $(tput setaf 14)update /etc/hosts file$(tput sgr0)"
+	echo "$(tput setaf 11)update skip$(tput sgr0)   $(tput setaf 14)update /etc/hosts file without any user intervetion (e.g. to be used by a systemd service)$(tput sgr0)"
+	echo "$(tput setaf 11)version$(tput sgr0)   $(tput setaf 14)display current version$(tput sgr0)"
+	echo "$(tput setaf 11)manage$(tput sgr0)   $(tput setaf 14)manage web and custom modules (will enter into an interactive menu)$(tput sgr0)"
 elif [ "$1" = 'uninstall' ]
 then
 	show_info "Program will be uninstalled"

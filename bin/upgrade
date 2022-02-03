@@ -37,7 +37,7 @@ get_latest_tag() {
 upgrade() {
 	# Create a temporary directory
 	TMP_DIR=/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
-	show_info "Creating a temporary directory at $TMP_DIR"
+	show_info "Creating a temporary directory at $(tput setaf 14)$TMP_DIR$(tput sgr0)"
 	mkdir $TMP_DIR
 
 	# Download latest zip file
@@ -63,15 +63,15 @@ verify_upgrade() {
 	repo_name=$(cat $CONFIG_DIR/about | grep repo_name | awk '{print $2}')
 	branch=$(cat $CONFIG_DIR/about | grep branch | awk '{print $2}')
 
-	show_info "Current version: $current_version"
+	show_info "Current version: $(tput setaf 14)$current_version$(tput sgr0)"
 	
 	latest_version=$(get_latest_tag $repo_username $repo_name)
 
-	show_info "Latest version: $latest_version"
+	show_info "Latest version: $(tput setaf 14)$latest_version$(tput sgr0)"
 
 	if [ ! "$current_version" = "$latest_version" ]
 	then
-		show_info "A newer version was found. Upgrade? (Type 'upgrade' if yes)"
+		show_info "A newer version was found. Type $(tput setaf 11)upgrade$(tput setaf 250) to upgrade."
 		read CONTINUE
 		if [ "$CONTINUE" = 'upgrade' ]
 		then
