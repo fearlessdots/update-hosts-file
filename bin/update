@@ -104,7 +104,12 @@ backup_hostfile()
 	then
 		backup_file=$(date +%s | sha256sum | base64 | head -c 32 ; echo).BACKUP
 		cp $HOSTS_FILE $BACKUP_DIR/$backup_file
-		show_info "Current /etc/hosts file backed up as $(tput setaf 14)$backup_file$(tput sgr0)"
+		if [ ! "$PARAMETER" = 'systemd' ]
+		then
+			show_info "Current /etc/hosts file backed up as $(tput setaf 14)$backup_file$(tput sgr0)"
+		else
+			show_info "Current /etc/hosts file backed up as $backup_file"
+		fi
 		#echo "" > /etc/hosts
 	else
 		show_attention "/etc/hosts file not found!"
@@ -232,7 +237,12 @@ verify_internet_connection
 
 # Create a temporary directory
 TMP_DIR=/tmp/$(date +%s | sha256sum | base64 | head -c 32 ; echo)
-show_info "Creating a temporary directory at $(tput setaf 14)$TMP_DIR$(tput sgr0)"
+if [ ! "$PARAMETER" = 'systemd' ]
+then
+	show_info "Creating a temporary directory at $(tput setaf 14)$TMP_DIR$(tput sgr0)"
+else
+	show_info "Creating a temporary directory at $TMP_DIR"
+fi
 mkdir $TMP_DIR
 
 # Verify program directories integrity
