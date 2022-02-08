@@ -63,7 +63,10 @@ then
 	show_info "Current version: $(tput setaf 11)$version$(tput sgr0)"
 elif [ "$1" = 'update' ]
 then
-	show_info "/etc/hosts will be updated"
+	if [ ! "$2" = 'systemd' ]
+	then
+		show_info "/etc/hosts will be updated"
+	fi
 	$PROGRAM_DIR/bin/update $2
 elif [ "$1" = 'manage' ]
 then

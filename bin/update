@@ -13,12 +13,22 @@ HOSTS_FILE=/etc/hosts
 
 # Shell display functions
 show_info(){
-	echo "$(tput setaf 26)[  UpdateHostsFile  ]$(tput sgr0) $(tput setaf 250)$1$(tput sgr0)"
+	if [ ! "$PARAMETER" = 'systemd' ]
+	then
+		echo "$(tput setaf 26)[  UpdateHostsFile  ]$(tput sgr0) $(tput setaf 250)$1$(tput sgr0)"
+	else
+		echo "[  UpdateHostsFile  ] $1"
+	fi
 }
 
 show_attention()
 {
-	echo "$(tput setaf 9)[ ATTENTION ]$(tput sgr0) $(tput setaf 7)$1$(tput sgr0)"
+	if [ ! "$PARAMETER" = 'systemd' ]
+	then
+		echo "$(tput setaf 9)[ ATTENTION ]$(tput sgr0) $(tput setaf 7)$1$(tput sgr0)"
+	else
+		echo "[  ATTENTION  ] $1"
+	fi
 }
 
 finish_program()
@@ -215,6 +225,8 @@ edit_file()
 ##
 #
 
+PARAMETER="$1"
+
 # Verify internet connection
 verify_internet_connection
 
@@ -259,7 +271,7 @@ echo "" > $HOSTS_FILE
 cp $TMP_HOSTS_FILE $HOSTS_FILE
 
 # Automatically run upgrade script, if enabled
-if [ ! "$1" = 'skip' ]
+if [ ! "$PARAMETER" = 'skip' ] && [ ! "$PARAMETER" = 'systemd' ]
 then
 	auto_verify_upgrade=$(cat $CONFIG_DIR/preferences | grep AUTO_VERIFY_UPGRADE | awk '{print $2}')
 	if [ "$auto_verify_upgrade" = 'true' ]
@@ -280,7 +292,7 @@ echo ""
 rm -rf $TMP_DIR
 
 # Ask for user if is needed to view or edit the hosts file
-if [ ! "$1" = 'skip' ]
+if [ ! "$PARAMETER" = 'skip' ] && [ ! "$PARAMETER" = 'systemd' ]
 then
 	show_info "Do you want to edit or view the hosts file?
 		type $(tput setaf 11)e$(tput setaf 250) to edit with the default editor, $(tput setaf 11)v$(tput setaf 250) to view
