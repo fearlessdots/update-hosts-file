@@ -1,0 +1,10 @@
+# Full path to default editor (nano, vim, emacs, micro,...)
+DEFAULT_EDITOR=/usr/bin/nano
+# Full path to default viewer (less, cat, batcat,...)
+DEFAULT_VIEWER=/usr/bin/less
+# Maximum number of files in backup directory
+MAX_BACKUP_FILES=10
+# Tell the program to skip module (and to not restore backup) if any web module source can not be reached
+KEEP_ON_HOST_UNREACHABLE=false
+# IP or hostname for remote server to test internet connection
+IP_TEST=8.8.8.8

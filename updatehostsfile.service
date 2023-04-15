@@ -1,0 +1,15 @@
+[Unit]
+Description=UpdateHostsFile - automatically update the hosts file on boot
+ConditionPathExists=/usr/bin/update-hosts-file
+Wants=network.target
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/update-hosts-file update --no-interactive
+Restart=on-failure
+RestartSec=35
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
