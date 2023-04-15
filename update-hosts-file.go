@@ -222,7 +222,7 @@ func loadLocalModules(tmphosts_file string) error {
 			fmt.Println("")
 		}    
         insertLine(tmphosts_file,"")
-        insertComment(tmphosts_file,"Local modules from " + module.Name())
+        insertComment(tmphosts_file,fmt.Sprintf("Hosts from local module '%s'",module.Name()))
         showInfo(fmt.Sprintf("    > Loading local modules from '%s' ",module.Name()))
 
         file, err := os.Open(localModulesDir + "/enabled/" + module.Name())
@@ -308,7 +308,7 @@ func loadWebModules(tmphosts_file string, tmpDir string) error {
 		}
 
 		insertLine(tmphosts_file,"")
-		insertComment(tmphosts_file,fmt.Sprintf("Local modules from %s",module.Name()))
+		insertComment(tmphosts_file,fmt.Sprintf("Hosts from web module '%s'",module.Name()))
 
 		moduleFile, err := os.Open(moduleTempFile)
 		if err != nil {
