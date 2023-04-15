@@ -5,7 +5,8 @@ pkgdesc="A program that automatically updates the /etc/hosts file"
 arch=('any')
 url="https://github.com/fearlessdots/update-hosts-file"
 license=('GPL3')
-depends=('glibc' 'go')
+depends=('glibc' 'gcc-libs')
+makedepends=('go')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
 sha256sums=()
 
