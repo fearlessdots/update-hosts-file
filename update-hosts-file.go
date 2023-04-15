@@ -108,7 +108,7 @@ func insertHost(file string, ip string, hostname string) {
 }
 
 func insertComment(file string, comment string) {
-    insertLine(file, fmt.Sprintf("#%s", comment))
+    insertLine(file, fmt.Sprintf("# %s", comment))
 }
 
 //
