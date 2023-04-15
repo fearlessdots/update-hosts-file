@@ -26,15 +26,18 @@ GO_BUILD_FLAGS=-v
 
 .PHONY: deps
 deps:
+	@echo "====> Installing dependencies..."
 	go get -v
 
 .PHONY: build
 build: deps
+	@echo "====> Building binary..."
 	go build ${GO_BUILD_FLAGS}
 	strip ${BINARY_NAME}
 
 .PHONY: install
 install:
+	@echo "====> Installing binary and program files..."
 	mkdir -p ${INSTALL_PATH}
 	cp ${BINARY_NAME} ${INSTALL_PATH}
 	mkdir -p ${PROGRAM_DIR} ${PROGRAM_DIR}/config ${PROGRAM_DIR}/modules/local/enabled ${PROGRAM_DIR}/modules/web/enabled
@@ -45,6 +48,7 @@ install:
 
 .PHONY: uninstall
 uninstall:
+	@echo "====> Uninstalling binary and program files..."
 	rm ${INSTALL_PATH}/${BINARY_NAME}
 	rm -rf ${PROGRAM_DIR}
 	rm ${SYSMD_PATH}/${SYSMDSERVICE_NAME}
