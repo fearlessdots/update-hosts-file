@@ -9,8 +9,7 @@ Update hosts file (or `update-hosts-file`) is a program written in Go that autom
 To build the program, make sure that Go is installed on your system. Clone the repository or download an archive for a specific version and run the following command in the terminal:
 
 ```bash
-make deps # Download external Go modules
-make build # Build binary
+make build
 ```
 
 This will create a binary file called `update-hosts-file`. To install the binary and program files:
@@ -24,6 +23,16 @@ And to uninstall:
 ```bash
 sudo make uninstall
 ```
+
+# Post-installation
+
+After installing, run:
+
+```bash
+sudo update-hosts-file modules enable --local --module default
+```
+
+To enable the `default` local module, which contains the default hosts for Unix-based systems.
 
 # Documentation
 
