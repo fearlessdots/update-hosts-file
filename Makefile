@@ -56,11 +56,11 @@ build: deps
 
 	mkdir -p ${AUTOCOMPLETION_OUT}
 	@echo "====> Building autocompletion file for Bash..."
-	${BINARY_NAME} completion bash > ${AUTOCOMPLETION_OUT}/${BASH_AUTOCOMPLETION_FILE}
+	./${BINARY_NAME} completion bash > ${AUTOCOMPLETION_OUT}/${BASH_AUTOCOMPLETION_FILE}
 	@echo "====> Building autocompletion file for Zsh..."
-	${BINARY_NAME} completion zsh > ${AUTOCOMPLETION_OUT}/${ZSH_AUTOCOMPLETION_FILE}
+	./${BINARY_NAME} completion zsh > ${AUTOCOMPLETION_OUT}/${ZSH_AUTOCOMPLETION_FILE}
 	@echo "====> Building autocompletion file for Fish..."
-	${BINARY_NAME} completion fish > ${AUTOCOMPLETION_OUT}/${FISH_AUTOCOMPLETION_FILE}
+	./${BINARY_NAME} completion fish > ${AUTOCOMPLETION_OUT}/${FISH_AUTOCOMPLETION_FILE}
 
 .PHONY: install
 install:
