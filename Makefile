@@ -33,6 +33,7 @@ FISH_AUTOCOMPLETION_INSTALL=${DESTDIR}/usr/share/fish/vendor_completions.d
 
 # Flags to pass to the go build command
 GO_BUILD_FLAGS=-v
+GO_BUILD_LDFLAGS=-w
 
 .DEFAULT_GOAL := build
 
@@ -51,7 +52,7 @@ deps:
 .PHONY: build
 build: deps
 	@echo "====> Building binary..."
-	go build ${GO_BUILD_FLAGS}
+	go build ${GO_BUILD_FLAGS} -ldflags "$(GO_BUILD_LDFLAGS)"
 	strip ${BINARY_NAME}
 
 	mkdir -p ${AUTOCOMPLETION_OUT}
@@ -127,5 +128,5 @@ releases_build:
 	@for GOOS in $(RELEASES_OS); do \
 		echo ""; \
 		echo "Building binaries for OS: $$GOOS"; \
-		gox -os=$$GOOS -output "$(GOX_OUTPUT_PATH)"'/{{.Dir}}_{{.OS}}_{{.Arch}}'; \
+		gox -os=$$GOOS -ldflags="-w" -output "$(GOX_OUTPUT_PATH)"'/{{.Dir}}_{{.OS}}_{{.Arch}}'; \
 	done
