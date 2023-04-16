@@ -10,17 +10,17 @@ makedepends=('go')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
 sha256sums=()
 
-# prepare() {
-# 	 cd "$pkgname-$pkgver"
-# 	 make deps
-# }
-
 build() {
 	cd "$pkgname-$pkgver"
 	make build
 }
 
 package() {
+	# Create directories for shell autocompletion
+	echo "Creating directories for shell autocompletion"
+	mkdir -p ${pkgdir}/usr/share/bash-completion/completions ${pkgdir}/usr/share/zsh/site-functions \
+		${pkgdir}/usr/share/fish/vendor_completions.d
+
 	cd "$pkgname-$pkgver"
 	make DESTDIR=$pkgdir install
 }
