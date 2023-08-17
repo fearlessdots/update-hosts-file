@@ -945,10 +945,7 @@ func main() {
 	var rootCmd = &cobra.Command{
 		Use:   "update-hosts-file [command]",
 		Short: "A program to manage and update your /etc/hosts file with custom blocklists, both local and web sourced",
-		Long:  `The UpdateHostsFile program is a command-line utility designed to provide users with an efficient and 
-effective method of updating their hosts file. With the ability to leverage a variety of different sources, 
-including local and web-based modules, users can quickly and easily update their hosts file with the most 
-up-to-date information.`,
+		Long:  `The UpdateHostsFile program is a command-line utility designed to provide users with an efficient and effective method of updating their hosts file. With the ability to leverage a variety of different sources, including local and web-based modules, users can quickly and easily update their hosts file with the most up-to-date information.`,
 		Run: func(cmd *cobra.Command, args []string) {
 			fmt.Println("Welcome to UpdateHostsFile. Run 'update-hosts-file help' to get started.")
 			finishProgram(0)
