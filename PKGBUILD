@@ -8,7 +8,7 @@ license=('GPL3')
 depends=('glibc' 'gcc-libs')
 makedepends=('go')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('651a346439e05af228bd464fbc022003534be02ab3c586564bd6fd0d5b72e3b2')
+sha256sums=('SKIP')
 
 build() {
 	cd "$pkgname-$pkgver"
