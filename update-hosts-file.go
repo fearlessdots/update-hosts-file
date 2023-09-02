@@ -1074,7 +1074,7 @@ func main() {
 			if err := exec.Command("systemctl", "disable", "updatehostsfile.service").Run(); err != nil {
 				log.Fatalf("Error disabling systemd service: %v", err)
 			}
-			fmt.Println("UpdateHostsFile systemd service has been disabling")
+			fmt.Println("UpdateHostsFile systemd service has been disabled")
 		},
 	}
 
