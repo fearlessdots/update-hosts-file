@@ -299,9 +299,12 @@ func loadLocalModules(tmphosts_file string) error {
 		fmt.Println("")
 	}
 
+	orangeHex := "#ffa860"
+	orange := color.HEX(orangeHex)
+
 	insertLine(tmphosts_file,"")
 	insertComment(tmphosts_file,fmt.Sprintf("Hosts from local module '%s'",module.Name()))
-	showInfo(fmt.Sprintf("    > Loading local modules from '%s' ",module.Name()))
+	showInfo(fmt.Sprintf("    > Loading module %s",orange.Sprintf(module.Name())))
 
 	file, err := os.Open(localModulesDir + "/enabled/" + module.Name())
 	if err != nil {
@@ -357,7 +360,10 @@ func loadWebModules(tmphosts_file string, tmpDir string) error {
 			fmt.Println("")
 		}
 
-		showInfo(fmt.Sprintf("    > Loading module %s",module.Name()))
+		orangeHex := "#ffa860"
+		orange := color.HEX(orangeHex)
+
+		showInfo(fmt.Sprintf("    > Loading module %s",orange.Sprintf(module.Name())))
 
 		moduleSource, err := readWebModuleFile(filepath.Join(programDir, "modules", "web", "enabled",module.Name()))
 		moduleSource = strings.TrimRight(moduleSource, "\n")
