@@ -1043,7 +1043,7 @@ func main() {
 
 			space()
 
-			showText(fmt.Sprintf("Run %v to get started. \n\nTo know more about the program, run %v.", blue.Sprintf("update-hosts-file --help/-h"), blue.Sprintf("update-hosts-file --about")))
+			showText(fmt.Sprintf("Run %v to get started. \n\nTo know more about the program, run %v.", blue.Sprintf("update-hosts-file --help/-h"), blue.Sprintf("update-hosts-file about")))
 			finishProgram(0)
 		},
 	}
