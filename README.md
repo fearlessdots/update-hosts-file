@@ -92,6 +92,10 @@ This subcommand enables the systemd service on boot
 
 This subcommand disables the systemd service on boot
 
+`update-hosts-file about`
+
+This subcommand displays informations about the program.
+
 `update-hosts-file version`
 
 This subcommand displays the version of the program.
