@@ -164,4 +164,4 @@ sudo update-hosts-file modules list --all
 
 ## License
 
-Update Hosts File is licensed under the GPL-3.0 license.
+UpdateHostsFile is licensed under the GPL-3.0 license.
