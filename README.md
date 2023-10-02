@@ -13,7 +13,7 @@
 
 # Building the Program
 
-> I made available in this repo a PKGBUILD to make it possible to build and install easily on Arch Linux
+> I made available in this repo a PKGBUILD to make it possible to build and install easily on Arch Linux.
 
 To build the program, make sure that Go is installed on your system. Clone the repository or download an archive for a specific version and run the following command in the terminal:
 
