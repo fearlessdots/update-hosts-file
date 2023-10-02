@@ -21,7 +21,7 @@ To build the program, make sure that Go is installed on your system. Clone the r
 make build
 ```
 
-This will create a binary file called `update-hosts-file`; autocompletion files for `bash`, `zsh`, and `fish` in the directory `./autocompletions`; and markdown documentation files in the directory `./out`. To install the binary and program files (including the default modules, default `preferences` file, autocompletion files, and the documentation):
+This will create a binary file called `update-hosts-file`; autocompletion files for `bash`, `zsh`, and `fish` in the directory `./autocompletions`; and markdown documentation files in the directory `./docs`. To install the binary and program files (including the default modules, default `preferences` file, autocompletion files, and the documentation):
 
 ```bash
 sudo make install
