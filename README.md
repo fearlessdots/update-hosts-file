@@ -7,7 +7,7 @@
       |_|
 ```
 
-**UpdateHostsFile** (or `update-hosts-file`) is a program written in Go that automates the task of updating the /etc/hosts file on Unix-based systems. It can be configured to pull host information from various sources such as web-based and local blocklists files. It also automatically adds the hostname of the machine to make sure any changes to the hostname will be reflected in the /etc/hosts file.
+`UpdateHostsFile` (or `update-hosts-file`) is a program written in Go that automates the task of updating the /etc/hosts file on Unix-based systems. It can be configured to pull host information from various sources such as web-based and local blocklists files. It also automatically adds the hostname of the machine to make sure any changes to the hostname will be reflected in the /etc/hosts file.
 
 # Building the Program
 
